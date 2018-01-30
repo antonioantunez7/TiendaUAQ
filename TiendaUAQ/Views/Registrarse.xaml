@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="TiendaUAQ.Views.Registrarse">
+	<ContentPage.Content>
+        <ScrollView>
+            <StackLayout Padding="10,30,10,10" Spacing="10">
+                <Label Text="Crear una cuenta"
+                    FontFamily="Futura-Medium"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center">
+                </Label>
+
+                <Label Text="Nombre: "
+                    FontFamily="Futura-Medium"
+                    HorizontalOptions="Start"
+                    VerticalOptions="Center">
+                </Label>
+                <Entry x:Name="txtNombre"
+                    Placeholder="Ingrese su nombre"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="Center">
+                </Entry>
+
+                <Label Text="Apellido paterno: "
+                    FontFamily="Futura-Medium"
+                    HorizontalOptions="Start"
+                    VerticalOptions="Center">
+                </Label>
+                <Entry x:Name="txtPaterno"
+                    Placeholder="Ingrese su apellido paterno"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="Center">
+                </Entry>
+
+                <Label Text="Apellido materno: "
+                    FontFamily="Futura-Medium"
+                    HorizontalOptions="Start"
+                    VerticalOptions="Center">
+                </Label>
+                <Entry x:Name="txtMaterno"
+                    Placeholder="Ingrese su apellido materno"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="Center">
+                </Entry>
+
+                <Label Text="Correo electrónico: "
+                    FontFamily="Futura-Medium"
+                    HorizontalOptions="Start"
+                    VerticalOptions="Center">
+                </Label>
+                <Entry x:Name="txtCorreo"
+                    Placeholder="Ingrese su correo electrónico"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="Center">
+                </Entry>
+
+                <Label Text="Contraseña: "
+                    FontFamily="Futura-Medium"
+                    HorizontalOptions="Start"
+                    VerticalOptions="Center">
+                </Label>
+                <Entry x:Name="txtPassword"
+                    Placeholder="Ingrese su contraseña"
+                    IsPassword="true"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="Center">
+                </Entry>
+
+                <Label Text="Confirmar ontraseña: "
+                    FontFamily="Futura-Medium"
+                    HorizontalOptions="Start"
+                    VerticalOptions="Center">
+                </Label>
+                <Entry x:Name="txtConfirmaPassword"
+                    Placeholder="Confirme su contraseña"
+                    IsPassword="true"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="Center">
+                </Entry>
+                
+                <ActivityIndicator x:Name="waitActivityIndicador"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"/>
+                <Button x:Name="btnCancelar"
+                    FontFamily="Futura-Medium"
+                    Clicked="Cancelar_Clicked"
+                    Text="Cancelar"
+                    TextColor="White"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="Center">
+                </Button>
+                <Button x:Name="btnGuardar"
+                    FontFamily="Futura-Medium"
+                    Clicked="GuardarRegistro_Clicked"
+                    Text="Guardar"
+                    TextColor="White"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="Center">
+                </Button>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

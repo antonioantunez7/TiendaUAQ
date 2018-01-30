@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="TiendaUAQ.Views.Inicio">
+	<ContentPage.Content>
+        <ScrollView>
+            <StackLayout Padding="10,30,10,10" Spacing="10">
+                <Label Text="Tienda UAQ"
+                    FontFamily="Futura-Medium"
+                    Font="30"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center">
+                </Label>
+                <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                    <Image Source="icono.png" HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="150" />
+                </StackLayout>
+                <Label Text="Iniciar sesión"
+                    FontFamily="Futura-Medium"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center">
+                </Label>
+                <ActivityIndicator x:Name="waitActivityIndicador"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"/>
+                <Label Text="Usuario: "
+                    FontFamily="Futura-Medium"
+                    HorizontalOptions="Start"
+                    VerticalOptions="Center">
+                </Label>
+                <Entry x:Name="txtUsuario"
+                    Placeholder="Ingrese su usuario"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="Center">
+                </Entry>
+
+                <Label Text="Contraseña: "
+                    FontFamily="Futura-Medium"
+                    HorizontalOptions="Start"
+                    VerticalOptions="Center">
+                </Label>
+                <Entry x:Name="txtPassword"
+                    Placeholder="Ingrese su contraseña"
+                    IsPassword="true"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="Center">
+                </Entry>
+
+                <Button x:Name="btnIngresar"
+                    FontFamily="Futura-Medium"
+                    Clicked="Ingresar_Clicked"
+                    Text="Ingresar"
+                    TextColor="White"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="Center">
+                </Button>
+                <Button x:Name="btnRegistrarse"
+                    FontFamily="Futura-Medium"
+                    Clicked="Registrarse_Clicked"
+                    Text="Registrarse"
+                    TextColor="White"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="Center">
+                </Button>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

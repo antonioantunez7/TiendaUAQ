@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="TiendaUAQ.Views.DetalleProducto">
+	<ContentPage.Content>
+        <ScrollView>
+            <StackLayout>
+                <ListView
+                    x:Name="DetalleDelProducto" ItemsSource="{Binding DetalleDelProducto}" VerticalOptions="FillAndExpand" HasUnevenRows="True" >
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <ViewCell.View>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="*" />
+                                        </Grid.RowDefinitions>
+                                        <StackLayout BackgroundColor="White" VerticalOptions="FillAndExpand" HorizontalOptions="Fill">
+                                            <StackLayout Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Center">
+                                                <ContentView Padding="0,0,0,0" VerticalOptions="FillAndExpand">
+                                                    <Image Source="{Binding url_imagen}" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" HeightRequest="300"/>
+                                                </ContentView>
+                                            </StackLayout>
+                                        </StackLayout>
+                                        <ScrollView Grid.Row="1">
+                                            <StackLayout Orientation="Vertical" Padding="5,40,16,40">
+                                                <Label Text="{Binding nombre}" FontSize="22" FontAttributes="Bold" HorizontalOptions="Center" FontFamily="Futura-Medium" TextColor="#245664"></Label>
+                                                <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                                                      <Label FontFamily="Futura-Medium" FontSize="18" Text="$ " TextColor="#EC7063" FontAttributes="Bold" HorizontalOptions="Start" VerticalOptions="Center"/>
+                                                      <Label FontFamily="Futura-Medium" FontSize="18" HorizontalOptions="FillAndExpand" Text="{Binding precio}" TextColor="#EC7063"></Label>
+                                                </StackLayout>
+                                                <StackLayout Orientation="Horizontal" HeightRequest="10"></StackLayout>
+                                                <Frame>
+                                                    <StackLayout Orientation="Vertical">
+                                                        <StackLayout Orientation="Horizontal">
+                                                          <Label FontSize="10" Text="Características del artículo " TextColor="Black" FontAttributes="Bold" HorizontalOptions="Start" VerticalOptions="Center"/>
+                                                        </StackLayout>
+                                                        <StackLayout Orientation="Horizontal">
+                                                          <Label FontSize="10" HorizontalOptions="FillAndExpand" Text="{Binding descripcion}" TextColor="Gray"></Label>
+                                                        </StackLayout>
+                                                    </StackLayout>
+                                                </Frame>
+                                                <Button x:Name="btnAgregarAlCarrito"
+                                                    Clicked="agregarAlCarrito"
+                                                    FontFamily="Futura-Medium"
+                                                    Text="Agregar al carrito"
+                                                    TextColor="White"
+                                                    VerticalOptions="Center">
+                                                </Button>
+                                            </StackLayout>
+                                        </ScrollView>
+                                    </Grid>
+                                </ViewCell.View>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+       </ScrollView>
+	</ContentPage.Content>
+</ContentPage>

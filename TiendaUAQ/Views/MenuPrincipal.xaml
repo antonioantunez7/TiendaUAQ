@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MasterDetailPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="TiendaUAQ.Views.MenuPrincipal">
+	<MasterDetailPage.Master>
+        <ContentPage 
+            Title="Tienda UAQ" >
+            <ListView Opacity="1" HasUnevenRows="true"
+                x:Name="ListaMenu" ItemSelected="ListaMenu_ItemSelected" Header="">
+                <ListView.HeaderTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Image Source="icono.png" VerticalOptions="Center" HeightRequest="100" BackgroundColor="#EC7063"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.HeaderTemplate>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout VerticalOptions="FillAndExpand"
+                             Orientation="Horizontal"
+                             Padding="5,5,0,5"
+                             Spacing="5">
+                                <Image Source="{Binding icono}"
+                                 WidthRequest="50"
+                                 HeightRequest="50"
+                                 VerticalOptions="Center" />
+                                <Label Text="{Binding titulo}"
+                                 FontSize="12"
+                                 VerticalOptions="Center"
+                                 TextColor="Black" FontFamily="Futura-Medium"/>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </ContentPage>
+    </MasterDetailPage.Master>
+</MasterDetailPage>

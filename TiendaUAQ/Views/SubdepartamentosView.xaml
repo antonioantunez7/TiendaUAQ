@@ -1,28 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="TiendaUAQ.Views.SubdepartamentosView" Title="Subdepartamentos">
-	<ListView Opacity="1" HasUnevenRows="true"
-                x:Name="ListaSubdeptos" ItemSelected="ListaSubdepartamentos_ItemSelected" Header="">
-                <ListView.HeaderTemplate>
-                    <DataTemplate>
-                        <Grid>
-                            <Image Source="http://www.generaccion.com/w/imagenes/galerias/7892-20_04_2012_15_02_14_1492029543.jpg" VerticalOptions="Center" HeightRequest="100" BackgroundColor="#EC7063"/>
-                        </Grid>
-                    </DataTemplate>
-                </ListView.HeaderTemplate>
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <StackLayout VerticalOptions="FillAndExpand"
-                             Orientation="Horizontal"
-                             Padding="15,15,10,15"
-                             Spacing="5">
-                                <Label Text="{Binding descSubdepartamento}"
-                                 FontSize="16"
-                                 VerticalOptions="Center"
-                                 TextColor="#EC7063" FontFamily="Futura-Medium"/>
-                            </StackLayout>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+    <ScrollView x:Name="vistaSubdepartamentos" VerticalOptions="FillAndExpand">
+        <Label x:Name="etiquetaCargando" 
+            HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"
+            HorizontalTextAlignment="Center" VerticalTextAlignment="Center"
+            FontAttributes="Bold" FontFamily="Futura-Medium"
+            FontSize="20" TextColor="#EC7063">
+        </Label>
+	    <ListView Opacity="1" HasUnevenRows="true"
+            x:Name="ListaSubdeptos" ItemSelected="ListaSubdepartamentos_ItemSelected" Header="">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout VerticalOptions="FillAndExpand"
+                         Orientation="Horizontal"
+                         Padding="15,15,10,15"
+                         Spacing="5">
+                            <Label Text="{Binding descSubdepartamento}"
+                             FontSize="16"
+                             VerticalOptions="Center"
+                             TextColor="#EC7063" FontFamily="Futura-Medium"/>
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </ScrollView>
 </ContentPage>

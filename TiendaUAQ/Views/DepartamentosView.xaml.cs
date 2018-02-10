@@ -23,12 +23,12 @@ namespace TiendaUAQ.Views
             Device.BeginInvokeOnMainThread(async () =>
             {
                 RestClient cliente = new RestClient();
-                var departamentos = await cliente.Get<ListaDepartamentos>("http://189.211.201.181:86/CulturaUAQWebservice/api/tblcategorias");
+                var departamentos = await cliente.GetDepartamentos<ListaDepartamentos>("http://189.211.201.181:88/TiendaUAQWebservice/api/tbldepartamentos");
                 Debug.Write(departamentos);
                 if (departamentos != null)
                 {
-                    //int totalRegistros = categorias.listaCategorias.Count;
-                    int totalRegistros = 11;
+                    int totalRegistros = departamentos.listaDepartamentos.Count;
+                    //int totalRegistros = 11;
                     int maximoColumnas = 2;
                     int auxColumnas = 0;
                     int renglones = 0;
@@ -61,12 +61,11 @@ namespace TiendaUAQ.Views
 
                                 //Crear el objeto a insertar
                                 //int cveCategoria = categorias.listaCategorias[columnas].cveCategoria;
-                                int cveDepartamento = 1;
-                                string descDepartamento = "LACTEOS";
+                                int cveDepartamento = departamentos.listaDepartamentos[columnas].cveDepartamento;
+                                string descDepartamento = departamentos.listaDepartamentos[columnas].descDepartamento;
                                 //string descCategoria = categorias.listaCategorias[columnas].descCategoria;
-                                //string url_portada = "http://189.211.201.181:86/" + categorias.listaCategorias[columnas].url_portada;
-                                string url_portada = "http://www.generaccion.com/w/imagenes/galerias/7892-20_04_2012_15_02_14_1492029543.jpg";
-                                //string url_portada = "https://pbs.twimg.com/profile_images/3673725732/da6f8684f131d039ee285cbf2bc52529.png";
+                                string url_portada = "http://189.211.201.181:88/" + departamentos.listaDepartamentos[columnas].url_portada;
+                                //string url_portada = "http://www.generaccion.com/w/imagenes/galerias/7892-20_04_2012_15_02_14_1492029543.jpg";
                                 Debug.Write(url_portada);
                                 var imagen = new Image()
                                 {
@@ -82,7 +81,7 @@ namespace TiendaUAQ.Views
                                 tapGestureRecognizer.Tapped += (s, e) =>
                                 {
                                     //imagen.Opacity = .5;
-                                    cargaSubdepartamentos(cveDepartamento, descDepartamento);
+                                    cargaSubdepartamentos(cveDepartamento, descDepartamento, url_portada);
                                 };
                                 imagen.GestureRecognizers.Add(tapGestureRecognizer);
                                 //gridCategorias.Children.Add(imagen, auxColumnas, renglones);
@@ -119,7 +118,7 @@ namespace TiendaUAQ.Views
                                 var label3 = new Label
                                 {
                                     FontSize = 16,
-                                    Text = "Departamento "+columnas+1,
+                                    Text = descDepartamento,
                                     TextColor = Color.Gray,
                                     HorizontalOptions = LayoutOptions.Center,
                                     HorizontalTextAlignment = TextAlignment.Center,
@@ -174,9 +173,9 @@ namespace TiendaUAQ.Views
             });
         }
 
-        private async void cargaSubdepartamentos(int cveDepartamento, string descDepartamento)
+        private async void cargaSubdepartamentos(int cveDepartamento, string descDepartamento, string url_portada)
         {
-            await Navigation.PushAsync(new SubdepartamentosView(cveDepartamento, descDepartamento));
+            await Navigation.PushAsync(new SubdepartamentosView(cveDepartamento, descDepartamento, url_portada));
         }
     }
 }

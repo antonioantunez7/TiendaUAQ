@@ -25,7 +25,7 @@ namespace TiendaUAQ.Views
             {
                 RestClient cliente = new RestClient();
 
-                var productos = await cliente.GetProductos<ListaProductos>("http://189.211.201.181:86/CulturaUAQWebservice/api/tblcategorias");
+                var productos = await cliente.GetProductos<ListaProductos>("http://189.211.201.181:88/TiendaUAQWebservice/api/tblproductos");
                 if (productos != null)
                 {
                     if (productos.listaProductos.Count > 0)
@@ -34,16 +34,17 @@ namespace TiendaUAQ.Views
                         double total = 0;
                         foreach (var producto in productos.listaProductos)
                         {
-                            string url_portada = "https://www.adidas.mx/dis/dw/image/v2/aaqx_prd/on/demandware.static/-/Sites-adidas-products/default/dw5ef5c4e2/zoom/S97604_01_standard.jpg?sh=840&strip=false&sw=840";
+                            string url_portada = "http://189.211.201.181:88/" + producto.url_imagen;
+                            //string url_portada = "https://www.adidas.mx/dis/dw/image/v2/aaqx_prd/on/demandware.static/-/Sites-adidas-products/default/dw5ef5c4e2/zoom/S97604_01_standard.jpg?sh=840&strip=false&sw=840";
                             lproductos.Add(new Productos
                             {
-                                idProducto = 1,
-                                nombre = "GORRA VISERA PLANA",
-                                descripcion = "Esta gorra de visera plana tiene mucho estilo gracias a su corona alta que le da un look urbano y moderno. Cuenta con una banda para absorber el sudor y cierre trasero a presión para que encuentres el ajuste perfecto.",
-                                precio = 296,
+                                idProducto = producto.idProducto,
+                                nombre = producto.nombre,
+                                descripcion = producto.descripcion,
+                                precio = producto.precio,
                                 url_imagen = url_portada    
                             });
-                            total = total + 296;
+                            total = total + producto.precio;
                         }
                         listaProductos.ItemsSource = lproductos;
 
@@ -64,6 +65,7 @@ namespace TiendaUAQ.Views
                             FontFamily = "Futura-Medium",
                             HorizontalOptions = LayoutOptions.FillAndExpand
                         };
+                        button.Clicked += comprar;
                         var stacklayout1 = new StackLayout
                         {
                             Orientation = StackOrientation.Horizontal,
@@ -111,6 +113,11 @@ namespace TiendaUAQ.Views
                 await Navigation.PushAsync(new DetalleProducto(producto));
                 listaProductos.SelectedItem = null;//Para que automaticamente se deseleccione el elemento
             }  
+        }
+
+        async void comprar(object sender, EventArgs e)
+        {
+            await DisplayAlert("Información", "Ústed va a comprar todos los artículos al carrito.", "Aceptar");
         }
     }
 }

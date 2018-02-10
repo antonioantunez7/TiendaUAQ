@@ -21,7 +21,7 @@ namespace TiendaUAQ.Views
                 new Models.Menu { id= 3, titulo = "Departamentos"/*, detalle = "Regresa a la página de departamentos."*/, icono = "icono.png"},
                 new Models.Menu { id= 4, titulo = "Acerca de"/*, detalle = "Regresa a la página de acerca de."*/, icono = "acerca.png"},
                 new Models.Menu { id= 5, titulo = "Salir"/*, detalle = "Cerrar la aplicación."*/, icono = "salir.png"},
-                new Models.Menu { id= 6, titulo = "Ingresar/Registrarse"/*, detalle = "Cerrar la aplicación."*/, icono = "acerca.png"}
+                //new Models.Menu { id= 6, titulo = "Ingresar/Registrarse"/*, detalle = "Cerrar la aplicación."*/, icono = "acerca.png"}
             };
             ListaMenu.ItemsSource = menu;
 

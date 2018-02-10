@@ -17,30 +17,17 @@ namespace TiendaUAQ.Views
         }
 
         public void cargaProductos(int cveSubdepartamento){
-            var etiquetaCargando = new Label()
-            {
-                HorizontalOptions = LayoutOptions.FillAndExpand,
-                VerticalOptions = LayoutOptions.FillAndExpand,
-                VerticalTextAlignment = TextAlignment.Center,
-                HorizontalTextAlignment = TextAlignment.Center,
-                FontFamily = "Arial",
-                Opacity = 0.5
-            };
-            etiquetaCargando.FontSize = 24;
-            etiquetaCargando.FontAttributes = FontAttributes.Bold;
             etiquetaCargando.Text = "Cargando productos, por favor espere...";
-            etiquetaCargando.FontFamily = "Futura-Medium";
-
             vistaProductos.Content = etiquetaCargando;
             Device.BeginInvokeOnMainThread(async () =>
             {
                 RestClient cliente = new RestClient();
-                var productos = await cliente.GetProductos<ListaProductos>("http://189.211.201.181:86/CulturaUAQWebservice/api/tblcategorias");
+                var productos = await cliente.GetProductos<ListaProductos>("http://189.211.201.181:88/TiendaUAQWebservice/api/tblproductos/subdepartamento/"+cveSubdepartamento);
                 Debug.Write(productos);
                 if (productos != null)
                 {
                     //int totalRegistros = categorias.listaCategorias.Count;
-                    int totalRegistros = 11;
+                    int totalRegistros = productos.listaProductos.Count;
                     int maximoColumnas = 2;
                     int auxColumnas = 0;
                     int renglones = 0;
@@ -73,11 +60,11 @@ namespace TiendaUAQ.Views
 
                                 //Crear el objeto a insertar
                                 //int cveCategoria = categorias.listaCategorias[columnas].cveCategoria;
-                                int idProducto = 1;
-                                string nombre = "GELATINA";
+                                int idProducto = productos.listaProductos[columnas].idProducto;
+                                string nombre = productos.listaProductos[columnas].nombre;
                                 //string descCategoria = categorias.listaCategorias[columnas].descCategoria;
-                                //string url_portada = "http://189.211.201.181:86/" + categorias.listaCategorias[columnas].url_portada;
-                                string url_portada = "https://www.adidas.mx/dis/dw/image/v2/aaqx_prd/on/demandware.static/-/Sites-adidas-products/default/dw5ef5c4e2/zoom/S97604_01_standard.jpg?sh=840&strip=false&sw=840";
+                                string url_portada = "http://189.211.201.181:88/" + productos.listaProductos[columnas].url_imagen;
+                                //string url_portada = "https://www.adidas.mx/dis/dw/image/v2/aaqx_prd/on/demandware.static/-/Sites-adidas-products/default/dw5ef5c4e2/zoom/S97604_01_standard.jpg?sh=840&strip=false&sw=840";
                                 //string url_portada = "https://pbs.twimg.com/profile_images/3673725732/da6f8684f131d039ee285cbf2bc52529.png";
                                 Debug.Write(url_portada);
                                 var imagen = new Image()
@@ -89,8 +76,8 @@ namespace TiendaUAQ.Views
                                     HorizontalOptions = LayoutOptions.Center,
                                     Opacity = 0.8
                                 };
-                                Productos producto = new Productos{idProducto = 1, nombre = "GORRA VISERA PLANA",
-                                    descripcion = "Esta gorra de visera plana tiene mucho estilo gracias a su corona alta que le da un look urbano y moderno. Cuenta con una banda para absorber el sudor y cierre trasero a presión para que encuentres el ajuste perfecto.", precio = 296, url_imagen = url_portada};
+                                Productos producto = new Productos{idProducto = idProducto, nombre = nombre,
+                                    descripcion = productos.listaProductos[columnas].descripcion, precio = productos.listaProductos[columnas].precio, url_imagen = url_portada};
 
                                 //Se crea el evento del clic de la imagen
                                 var tapGestureRecognizer = new TapGestureRecognizer();
@@ -135,7 +122,7 @@ namespace TiendaUAQ.Views
                                 var label3 = new Label
                                 {
                                     FontSize = 14,
-                                    Text = "$99.99",
+                                    Text = "$"+productos.listaProductos[columnas].precio,
                                     TextColor = Color.Maroon,
                                     HorizontalOptions = LayoutOptions.Center,
                                     HorizontalTextAlignment = TextAlignment.Center,
@@ -145,7 +132,7 @@ namespace TiendaUAQ.Views
                                 var label4 = new Label
                                 {
                                     FontSize = 12,
-                                    Text = "Gorra Adidas Negra Original",
+                                    Text = nombre,
                                     TextColor = Color.Black,
                                     HorizontalOptions = LayoutOptions.Center,
                                     HorizontalTextAlignment = TextAlignment.Center,
@@ -194,9 +181,14 @@ namespace TiendaUAQ.Views
                             }
                             auxColumnas++;
                         }
+                        vistaProductos.Content = gridProductos;
+                    } else{
+                        etiquetaCargando.Text = "No existen productos en este subdepartamento.";
+                        vistaProductos.Content = etiquetaCargando;
                     }
-                    vistaProductos.Content = gridProductos;
-
+                } else{
+                    etiquetaCargando.Text = "Error de conexión.";
+                    vistaProductos.Content = etiquetaCargando;
                 }
             });        
         }

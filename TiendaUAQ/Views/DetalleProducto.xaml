@@ -17,7 +17,11 @@
                                         <StackLayout BackgroundColor="White" VerticalOptions="FillAndExpand" HorizontalOptions="Fill">
                                             <StackLayout Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Center">
                                                 <ContentView Padding="0,0,0,0" VerticalOptions="FillAndExpand">
-                                                    <Image Source="{Binding url_imagen}" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" HeightRequest="300"/>
+                                                    <Image Source="{Binding url_imagen}" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" HeightRequest="200">
+                                                        <Image.GestureRecognizers>
+                                                            <TapGestureRecognizer Tapped="seleccionaImagenDE"/>
+                                                        </Image.GestureRecognizers>
+                                                    </Image>
                                                 </ContentView>
                                             </StackLayout>
                                         </StackLayout>
@@ -37,12 +41,36 @@
                                                         <StackLayout Orientation="Horizontal">
                                                           <Label FontSize="10" HorizontalOptions="FillAndExpand" Text="{Binding descripcion}" TextColor="Gray"></Label>
                                                         </StackLayout>
+                                                        <StackLayout Orientation="Horizontal">
+                                                            <Label FontSize="10" Text="Cantidad de artículos: "  HorizontalOptions="Start" VerticalOptions="Center" WidthRequest="100" />
+                                                            <Picker x:Name="cmbCantidadArticulos" Title="Seleccione" HorizontalOptions="FillAndExpand" VerticalOptions="Center" WidthRequest="100" SelectedIndexChanged="seleccionaCA_SelectedIndexChanged">
+                                                                <Picker.Items>
+                                                                    <x:String>1</x:String> 
+                                                                    <x:String>2</x:String>
+                                                                    <x:String>3</x:String>
+                                                                    <x:String>4</x:String>
+                                                                    <x:String>5</x:String>
+                                                                    <x:String>6</x:String>
+                                                                    <x:String>7</x:String>
+                                                                    <x:String>8</x:String>
+                                                                    <x:String>9</x:String>
+                                                                    <x:String>10</x:String>
+                                                                </Picker.Items>
+                                                            </Picker>
+                                                        </StackLayout>
                                                     </StackLayout>
                                                 </Frame>
                                                 <Button x:Name="btnAgregarAlCarrito"
                                                     Clicked="agregarAlCarrito"
                                                     FontFamily="Futura-Medium"
                                                     Text="Agregar al carrito"
+                                                    TextColor="White"
+                                                    VerticalOptions="Center">
+                                                </Button>
+                                                <Button x:Name="btnVerCarrito"
+                                                    Clicked="verCarrito"
+                                                    FontFamily="Futura-Medium"
+                                                    Text="Ver carrito"
                                                     TextColor="White"
                                                     VerticalOptions="Center">
                                                 </Button>

@@ -25,7 +25,7 @@ namespace TiendaUAQ.Views
             };
             ListaMenu.ItemsSource = menu;
 
-            Detail = new NavigationPage(new DepartamentosView());//Se cambia para que sea la cartelera la primera en cargar
+            Detail = new NavigationPage(new Buscador());//Se cambia para que sea la cartelera la primera en cargar
         }
 
         public async void ListaMenu_ItemSelected(object sender, Xamarin.Forms.SelectedItemChangedEventArgs e)
@@ -35,6 +35,7 @@ namespace TiendaUAQ.Views
             {
                 if (menu.id == 1)//Inicio (Cartelera o categorias)
                 {
+                    Detail = new NavigationPage(new Buscador());
                     IsPresented = false;//Para que el menu desaparesca cuando se le haga click
                 }
                 if (menu.id == 2)//Carrito de compras

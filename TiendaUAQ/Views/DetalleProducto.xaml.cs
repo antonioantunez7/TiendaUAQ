@@ -29,7 +29,6 @@ namespace TiendaUAQ.Views
 
         void seleccionaImagenDE(object sender, EventArgs args)
         {
-                
         }
 
         async void seleccionaCA_SelectedIndexChanged(object sender, System.EventArgs e)

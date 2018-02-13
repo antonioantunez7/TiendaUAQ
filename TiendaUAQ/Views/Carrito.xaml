@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="TiendaUAQ.Views.Carrito">
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="TiendaUAQ.Views.Carrito" Title="Carrito de compras">
 	<ContentPage.Content>
         <ScrollView x:Name="svProductos">
             <Label x:Name="etiquetaCargando" 
@@ -19,11 +19,22 @@
                                         <StackLayout Orientation="Horizontal">
                                             <Image Source="{Binding url_imagen}" HorizontalOptions="Start" WidthRequest="40"  VerticalOptions="Center" />
                                             <StackLayout Orientation="Vertical" Padding="10,0,0,0">
-                                                <Label FontSize="12" HorizontalOptions="FillAndExpand" Text="{Binding nombre}" AbsoluteLayout.LayoutBounds="0.25, 0.25, 400, 40" FontFamily="Futura-Medium"></Label>
+                                                <Label FontSize="12" HorizontalOptions="FillAndExpand" Text="{Binding nombreCantidad}" AbsoluteLayout.LayoutBounds="0.25, 0.25, 400, 40" FontFamily="Futura-Medium"></Label>
                                                 <StackLayout Orientation="Horizontal">
-                                                      <Label FontFamily="Futura-Medium" FontSize="10" Text="$ " TextColor="#EC7063" FontAttributes="Bold"/>
-                                                      <Label FontFamily="Futura-Medium" FontSize="10" Text="{Binding precio}" TextColor="#EC7063"></Label>
+                                                    <Label FontFamily="Futura-Medium" FontSize="10" Text="$" TextColor="#EC7063" FontAttributes="Bold"/>
+                                                    <Label FontFamily="Futura-Medium" FontSize="10" Text="{Binding precio}" TextColor="#EC7063"></Label>
                                                 </StackLayout>
+                                            </StackLayout>
+                                            <StackLayout Orientation="Vertical" Padding="0,0,0,0" HorizontalOptions="EndAndExpand">
+                                                <Button x:Name="btnEliminarDelCarrito"
+                                                    CommandParameter="{Binding idDetallePedido}"
+                                                    Clicked="eliminarDelCarrito"
+                                                    FontFamily="Futura-Medium"
+                                                    Text="x"
+                                                    TextColor="White"
+                                                    HeightRequest="40"
+                                                    WidthRequest="40">
+                                                </Button>
                                             </StackLayout>
                                         </StackLayout>
                                     </StackLayout>

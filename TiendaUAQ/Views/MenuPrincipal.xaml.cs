@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using TiendaUAQ.Models;
 using Xamarin.Forms;
 
 namespace TiendaUAQ.Views
@@ -59,12 +59,12 @@ namespace TiendaUAQ.Views
                     if (resp)
                     {
                         //Destruye las variables de sesión (persistencia de los datos)
-                        if (Application.Current.Properties.ContainsKey("idUsuario")
+                        if (Application.Current.Properties.ContainsKey("idUsuarioTienda")
                             && Application.Current.Properties.ContainsKey("nombre")
                             && Application.Current.Properties.ContainsKey("paterno")
                             && Application.Current.Properties.ContainsKey("materno"))
                         {
-                            Application.Current.Properties.Remove("idUsuario");
+                            Application.Current.Properties.Remove("idUsuarioTienda");
                             Application.Current.Properties.Remove("nombre");
                             Application.Current.Properties.Remove("paterno");
                             Application.Current.Properties.Remove("materno");

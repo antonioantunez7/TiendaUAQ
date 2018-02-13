@@ -69,6 +69,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Views\Buscador.xaml.cs">
       <DependentUpon>Buscador.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Pedidos.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\AboutPage.xaml" />

@@ -80,18 +80,18 @@
                 <ActivityIndicator x:Name="waitActivityIndicador"
                     HorizontalOptions="Center"
                     VerticalOptions="Center"/>
-                <Button x:Name="btnCancelar"
-                    FontFamily="Futura-Medium"
-                    Clicked="Cancelar_Clicked"
-                    Text="Cancelar"
-                    TextColor="White"
-                    HorizontalOptions="FillAndExpand"
-                    VerticalOptions="Center">
-                </Button>
                 <Button x:Name="btnGuardar"
                     FontFamily="Futura-Medium"
                     Clicked="GuardarRegistro_Clicked"
                     Text="Guardar"
+                    TextColor="White"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="Center">
+                </Button>
+                <Button x:Name="btnCancelar"
+                    FontFamily="Futura-Medium"
+                    Clicked="Cancelar_Clicked"
+                    Text="Cancelar"
                     TextColor="White"
                     HorizontalOptions="FillAndExpand"
                     VerticalOptions="Center">

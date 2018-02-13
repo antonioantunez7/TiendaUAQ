@@ -42,12 +42,12 @@ namespace TiendaUAQ.Views
                     string paterno = "Paterno";
                     string materno = "Materno";
                     //Guarda las variables en la app, persistencia de los datos
-                    Application.Current.Properties["idUsuario"] = 1;
+                    Application.Current.Properties["idUsuarioTienda"] = 2;
                     Application.Current.Properties["nombre"] = nombre;
                     Application.Current.Properties["paterno"] = "Paterno";
                     Application.Current.Properties["materno"] = "Materno";
                     Usuarios usuario = new Usuarios { idUsuario = idUsuario, nombre = nombre, paterno = paterno, materno = materno };
-                    Application.Current.MainPage = new NavigationPage(new MenuPrincipal());//Reemplaza la pagina
+                    Application.Current.MainPage = new MenuPrincipal();//Reemplaza la pagina
                 }
                 else
                 {
@@ -63,7 +63,8 @@ namespace TiendaUAQ.Views
 
         async void Registrarse_Clicked(object sender, System.EventArgs e)
         {
-            Application.Current.MainPage = new NavigationPage(new Registrarse());//Reemplaza la pagina  
+            //Application.Current.MainPage = new NavigationPage(new Registrarse());//Reemplaza la pagina  
+            await Navigation.PushAsync(new Registrarse());
         }
     }
 }

@@ -15,6 +15,10 @@ namespace TiendaUAQ.Models
         public string activo { get; set; }
         public string fechaRegistro { get; set; }
         public string fechaActualizacion { get; set; }
+
+        public int cantidad { get; set; }
+        public string nombreCantidad { get; set; }
+        public int idDetallePedido { get; set; }
     }
 
     public class ListaProductos{ public List<Productos> listaProductos { get; set; }}

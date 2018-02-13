@@ -101,5 +101,56 @@ namespace TiendaUAQ.Services
             }
             return default(T);
         }
+
+        public async Task<T> GetPedidos<T>(string url)
+        {
+            try
+            {
+                HttpClient cliente = new HttpClient();
+                var authData = string.Format("{0}:{1}", "tiendaUAQ", "t13nd4U4q");
+                var authHeaderValue = Convert.ToBase64String(Encoding.UTF8.GetBytes(authData));
+                cliente.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", authHeaderValue);
+                var respuesta = await cliente.GetAsync(url);
+                Debug.Write(respuesta);
+                Debug.Write("*****");
+                Debug.WriteLine(url);
+                Debug.Write("*****");
+                if (respuesta.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    var jsonRespuesta = await respuesta.Content.ReadAsStringAsync();
+                    if(jsonRespuesta.Contains("idProducto")){
+                        return Newtonsoft.Json.JsonConvert.DeserializeObject<T>(jsonRespuesta);
+                    } else{
+                        var jsonArmado = "{'idPedido':'0'}";
+                        return Newtonsoft.Json.JsonConvert.DeserializeObject<T>(jsonArmado);
+                    }
+                }
+                else
+                {
+                    var jsonArmado = "{'idPedido':'0'}";
+                    return Newtonsoft.Json.JsonConvert.DeserializeObject<T>(jsonArmado);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("\nOcurrio un error en la funcion Get del Task");
+                Debug.WriteLine(ex);
+            }
+            return default(T);
+        }
+
+        public async Task<T> convertirJson<T>(string json)
+        {
+            try
+            {
+                return Newtonsoft.Json.JsonConvert.DeserializeObject<T>(json);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("\nOcurrio un error en la funcion Get del Task");
+                Debug.WriteLine(ex);
+            }
+            return default(T);
+        }
     }
 }

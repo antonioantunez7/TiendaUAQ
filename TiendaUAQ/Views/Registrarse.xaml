@@ -42,7 +42,7 @@
                     VerticalOptions="Center">
                 </Entry>
 
-                <Label Text="Correo electrónico: "
+                <Label Text="Correo electrónico (Usuario): "
                     FontFamily="Futura-Medium"
                     HorizontalOptions="Start"
                     VerticalOptions="Center">

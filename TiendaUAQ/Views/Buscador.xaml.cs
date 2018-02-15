@@ -90,13 +90,16 @@ namespace TiendaUAQ.Views
                                 };
                                 //Se crea el evento del clic de la imagen
                                 var tapGestureRecognizer = new TapGestureRecognizer();
+                                string estatusProducto = "# Existencias: " + productos.listaProductos[columnas].existencias + "."; 
                                 Productos productoX = new Productos
                                 {
                                     idProducto = idProducto,
                                     nombre = nombre,
                                     url_imagen = url_portada,
                                     descripcion = productos.listaProductos[columnas].descripcion,
-                                    precio = precio
+                                    precio = precio,
+                                    precioUnitario = precio,
+                                    estatusProducto = estatusProducto
                                 };
                                 tapGestureRecognizer.Tapped += (s, e) =>
                                 {

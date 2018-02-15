@@ -75,6 +75,7 @@ namespace TiendaUAQ.Services
         {
             try
             {
+                Debug.Write(url);
                 HttpClient cliente = new HttpClient();
                 var authData = string.Format("{0}:{1}", "tiendaUAQ", "t13nd4U4q");
                 var authHeaderValue = Convert.ToBase64String(Encoding.UTF8.GetBytes(authData));
@@ -139,11 +140,119 @@ namespace TiendaUAQ.Services
             return default(T);
         }
 
+        public async Task<T> GetDetallePedido<T>(string url)
+        {
+            try
+            {
+                HttpClient cliente = new HttpClient();
+                var authData = string.Format("{0}:{1}", "tiendaUAQ", "t13nd4U4q");
+                var authHeaderValue = Convert.ToBase64String(Encoding.UTF8.GetBytes(authData));
+                cliente.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", authHeaderValue);
+                var respuesta = await cliente.GetAsync(url);
+                if (respuesta.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    var jsonRespuesta = await respuesta.Content.ReadAsStringAsync();
+                    if (jsonRespuesta.Contains("idDetallePedido"))
+                    {
+                        return Newtonsoft.Json.JsonConvert.DeserializeObject<T>(jsonRespuesta);
+                    }
+                    else
+                    {
+                        var jsonArmado = "{'idDetallePedido':'0'}";
+                        return Newtonsoft.Json.JsonConvert.DeserializeObject<T>(jsonArmado);
+                    }
+                }
+                else
+                {
+                    var jsonArmado = "{'idDetallePedido':'0'}";
+                    return Newtonsoft.Json.JsonConvert.DeserializeObject<T>(jsonArmado);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("\nOcurrio un error en la funcion Get del Task");
+                Debug.WriteLine(ex);
+            }
+            return default(T);
+        }
+
         public async Task<T> convertirJson<T>(string json)
         {
             try
             {
                 return Newtonsoft.Json.JsonConvert.DeserializeObject<T>(json);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("\nOcurrio un error en la funcion Get del Task");
+                Debug.WriteLine(ex);
+            }
+            return default(T);
+        }
+
+        public async Task<T> GetUsuarios<T>(string url)
+        {
+            try
+            {
+                HttpClient cliente = new HttpClient();
+                var authData = string.Format("{0}:{1}", "tiendaUAQ", "t13nd4U4q");
+                var authHeaderValue = Convert.ToBase64String(Encoding.UTF8.GetBytes(authData));
+                cliente.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", authHeaderValue);
+                var respuesta = await cliente.GetAsync(url);
+                if (respuesta.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    var jsonRespuesta = await respuesta.Content.ReadAsStringAsync();
+                    if (jsonRespuesta.Contains("idUsuario"))
+                    {
+                        return Newtonsoft.Json.JsonConvert.DeserializeObject<T>(jsonRespuesta);
+                    }
+                    else
+                    {
+                        var jsonArmado = "{'idUsuario':'0'}";
+                        return Newtonsoft.Json.JsonConvert.DeserializeObject<T>(jsonArmado);
+                    }
+                }
+                else
+                {
+                    var jsonArmado = "{'idUsuario':'0'}";
+                    return Newtonsoft.Json.JsonConvert.DeserializeObject<T>(jsonArmado);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("\nOcurrio un error en la funcion Get del Task");
+                Debug.WriteLine(ex);
+            }
+            return default(T);
+        }
+
+        public async Task<T> GetPrductosId<T>(string url)
+        {
+            try
+            {
+                HttpClient cliente = new HttpClient();
+                var authData = string.Format("{0}:{1}", "tiendaUAQ", "t13nd4U4q");
+                var authHeaderValue = Convert.ToBase64String(Encoding.UTF8.GetBytes(authData));
+                cliente.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", authHeaderValue);
+                var respuesta = await cliente.GetAsync(url);
+                if (respuesta.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    var jsonRespuesta = await respuesta.Content.ReadAsStringAsync();
+                    if (jsonRespuesta.Contains("idProducto"))
+                    {
+                        return Newtonsoft.Json.JsonConvert.DeserializeObject<T>(jsonRespuesta);
+                    }
+                    else
+                    {
+                        var jsonArmado = "{'idProducto':'0'}";
+                        return Newtonsoft.Json.JsonConvert.DeserializeObject<T>(jsonArmado);
+                    }
+                }
+                else
+                {
+                    var jsonArmado = "{'idProducto':'0'}";
+                    return Newtonsoft.Json.JsonConvert.DeserializeObject<T>(jsonArmado);
+                }
             }
             catch (Exception ex)
             {

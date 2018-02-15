@@ -14,6 +14,7 @@ namespace TiendaUAQ.Views
     public partial class Carrito : ContentPage
     {
         public ObservableCollection<Productos> lproductos { get; set; }
+        int cantidad = 0;
         public Carrito()
         {
             InitializeComponent();
@@ -40,7 +41,17 @@ namespace TiendaUAQ.Views
                             foreach (var producto in pedidos.detalle)
                             {
                                 string url_portada = "http://189.211.201.181:88/" + producto.url_imagen;
-                                int cantidad = producto.cantidad;
+                                cantidad = producto.cantidad;
+                                string estatusProducto = "# Existencias: " + producto.existencias;
+                                string descripcionPrecio = "" + producto.precio;
+                                if(producto.existencias == 0){//Si ya no hay productos
+                                    estatusProducto = "[Producto agotado]";
+                                    descripcionPrecio = "? [No contemplado]";
+                                } else if(cantidad > producto.existencias){//Si la cantidad de productos en el carrito es mayor al de existencias
+                                    estatusProducto = "# Existencias: "+producto.existencias+". Seleccione y cambie la cantidad de productos.";       
+                                    descripcionPrecio = "? [No contemplado]";
+                                }
+
                                 lproductos.Add(new Productos
                                 {
                                     idProducto = producto.idProducto,
@@ -48,12 +59,23 @@ namespace TiendaUAQ.Views
                                     nombre = producto.nombre,
                                     descripcion = producto.descripcion,
                                     precio = producto.precio,
+                                    descripcionPrecio = descripcionPrecio,
+                                    precioUnitario = producto.precioUnitario,
                                     url_imagen = url_portada,
                                     cantidad = cantidad,
-                                    nombreCantidad = producto.nombre + " (Cant." + cantidad + ")"
+                                    nombreCantidad = producto.nombre + " (Cant." + cantidad + ")",
+                                    estatusProducto = estatusProducto
 
                                 });
-                                total = total + producto.precio;
+                                if (producto.existencias == 0)
+                                {
+                                    
+                                } else if (cantidad > producto.existencias){
+                                    
+                                } else{
+                                    total = total + producto.precio;
+                                }
+
                             }
                             listaProductos.ItemsSource = lproductos;
 
@@ -113,8 +135,8 @@ namespace TiendaUAQ.Views
                 });
             } else{
                 etiquetaCargando.Text = "Inicie sesión desde el menú principal 'Iniciar sesión'. Si no cuenta con un usuario y contraseña seleccione 'Registrarse'.";
-                svProductos.Content = etiquetaCargando;    
-                await Navigation.PushAsync(new Inicio());
+                svProductos.Content = svIS;    
+                //await Navigation.PushAsync(new Inicio());
             }
         }
 
@@ -135,40 +157,43 @@ namespace TiendaUAQ.Views
 
         async void eliminarDelCarrito(object sender, System.EventArgs e)
         {
-            Button boton = (Button)sender;
-            var idDetallePedido = boton.CommandParameter;
-            HttpClient cliente = new HttpClient();
-            FormUrlEncodedContent formContent = null;
-            if (idDetallePedido != "")
+            var resp = await this.DisplayAlert("Confirmación", "¿Desea eliminar este producto del carrito?", "SI", "NO");
+            if (resp)
             {
-                formContent = new FormUrlEncodedContent(new[]
+                Button boton = (Button)sender;
+                var idDetallePedido = boton.CommandParameter;
+                HttpClient cliente = new HttpClient();
+                FormUrlEncodedContent formContent = null;
+                if (idDetallePedido != "")
                 {
-                    new KeyValuePair<string, string>("idDetallePedido", idDetallePedido.ToString()),
-                    new KeyValuePair<string, string>("activo","N")
-                });
+                    formContent = new FormUrlEncodedContent(new[]
+                    {
+                        new KeyValuePair<string, string>("idDetallePedido", idDetallePedido.ToString()),
+                        new KeyValuePair<string, string>("activo","N")
+                    });
+                }
+                else
+                {
+                    await DisplayAlert("Información", "Seleccione el producto que desee elimininar del carrito.", "Aceptar");
+                    return;
+                }
+                var myHttpClient = new HttpClient();
+                var authData = string.Format("{0}:{1}", "tiendaUAQ", "t13nd4U4q");
+                var authHeaderValue = Convert.ToBase64String(Encoding.UTF8.GetBytes(authData));
+                myHttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", authHeaderValue);
+                var response = await myHttpClient.PostAsync("http://189.211.201.181:88/TiendaUAQWebservice/api/tbldetallespedidos/guardar/", formContent);
+                var json = await response.Content.ReadAsStringAsync();
+                Debug.WriteLine(json);
+                if (response.IsSuccessStatusCode)
+                {
+                    await DisplayAlert("Correcto", "Se eliminó el producto del carrito correctamente.", "Aceptar");
+                    cargaCarrito();
+                }
+                else
+                {
+                    await DisplayAlert("Error", "No se pudo eliminar el producto del carrito. Intente nuevamente.", "Aceptar");
+                }
             }
-            else
-            {
-                await DisplayAlert("Información", "Seleccione el producto que desee elimininar del carrito.", "Aceptar");
-                return;
-            }
-            var myHttpClient = new HttpClient();
-            var authData = string.Format("{0}:{1}", "tiendaUAQ", "t13nd4U4q");
-            var authHeaderValue = Convert.ToBase64String(Encoding.UTF8.GetBytes(authData));
-            myHttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", authHeaderValue);
-            var response = await myHttpClient.PostAsync("http://189.211.201.181:88/TiendaUAQWebservice/api/tbldetallespedidos/guardar/", formContent);
-            var json = await response.Content.ReadAsStringAsync();
-            Debug.WriteLine(json);
-            if (response.IsSuccessStatusCode)
-            {
-                await DisplayAlert("Correcto", "Se eliminó el producto del carrito correctamente.", "Aceptar");
-                cargaCarrito();
-            }
-            else
-            {
-                await DisplayAlert("Error", "No se pudo eliminar el producto del carrito. Intente nuevamente.", "Aceptar");
-            }
-
         }
 
         protected override void OnAppearing()
@@ -177,5 +202,9 @@ namespace TiendaUAQ.Views
             cargaCarrito();
         }
 
+        async void IniciarSesion_Clicked(object sender, System.EventArgs e)
+        {
+            await Navigation.PushAsync(new Inicio());
+        }
     }
 }

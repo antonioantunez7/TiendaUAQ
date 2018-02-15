@@ -76,41 +76,71 @@ namespace TiendaUAQ.Views
             }
             waitActivityIndicador.IsRunning = true;//Pone el de cargando
             btnGuardar.IsEnabled = false;//Deshabilita el boton
-
-            HttpClient cliente = new HttpClient();
-            FormUrlEncodedContent formContent = null;
-                formContent = new FormUrlEncodedContent(new[]
-                {
-                    new KeyValuePair<string, string>("nombre", txtNombre.Text),
-                    new KeyValuePair<string, string>("paterno",txtPaterno.Text),
-                    new KeyValuePair<string, string>("materno",txtMaterno.Text),
-                    new KeyValuePair<string, string>("usuario",txtCorreo.Text),
-                    new KeyValuePair<string, string>("password",txtPassword.Text),
-                    new KeyValuePair<string, string>("cveTipoUsuario","1")//1:Cliente
-                });
-
-            var myHttpClient = new HttpClient();
-            var authData = string.Format("{0}:{1}", "tiendaUAQ", "t13nd4U4q");
-            var authHeaderValue = Convert.ToBase64String(Encoding.UTF8.GetBytes(authData));
-            myHttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", authHeaderValue);
-            var response = await myHttpClient.PostAsync("http://189.211.201.181:88/TiendaUAQWebservice/api/tblusuarios/guardar/", formContent);
-            var json = await response.Content.ReadAsStringAsync();
-            RestClient c = new RestClient();
-            var usuarioX = await c.convertirJson<Usuarios>(json);
-            if (response.IsSuccessStatusCode)
+            //valida si el usuario esta disponible
+            FormUrlEncodedContent formContent1 = null;
+            formContent1 = new FormUrlEncodedContent(new[]
             {
-                var usuario = usuarioX.idUsuario;
-                waitActivityIndicador.IsRunning = true;//Pone el de cargando
-                Application.Current.Properties["idUsuarioTienda"] = usuario;
-                var nombreUsuario = txtNombre.Text + " " + txtPaterno.Text + " " + txtMaterno.Text;
-                string mensajeEnvioCorreo = enviarCorreo(txtCorreo.Text,nombreUsuario,txtCorreo.Text,txtPassword.Text);
-                await DisplayAlert("Correcto", "Se registró correctamente. "+mensajeEnvioCorreo, "Aceptar");
-                Application.Current.MainPage = new MenuPrincipal();//Reemplaza la pagina 
-            }
-            else
+                new KeyValuePair<string, string>("usuario",txtCorreo.Text)
+            });
+
+            var myHttpClientValida = new HttpClient();
+            var authData1 = string.Format("{0}:{1}", "tiendaUAQ", "t13nd4U4q");
+            var authHeaderValue1 = Convert.ToBase64String(Encoding.UTF8.GetBytes(authData1));
+            myHttpClientValida.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", authHeaderValue1);
+            var responseValida = await myHttpClientValida.PostAsync("http://189.211.201.181:88/TiendaUAQWebservice/api/tblusuarios/valida/", formContent1);
+            var json1 = await responseValida.Content.ReadAsStringAsync();
+            RestClient c1 = new RestClient();
+            var usuarioV = await c1.convertirJson<Usuarios>(json1);
+            if (responseValida.IsSuccessStatusCode)
             {
-                waitActivityIndicador.IsRunning = true;//Pone el de cargando
-                await DisplayAlert("Error", "No se pudo registrar sus datos en la aplicación. Intente nuevamente.", "Aceptar");
+                if(usuarioV == null){
+                    HttpClient cliente = new HttpClient();
+                    FormUrlEncodedContent formContent = null;
+                    formContent = new FormUrlEncodedContent(new[]
+                    {
+                            new KeyValuePair<string, string>("nombre", txtNombre.Text),
+                            new KeyValuePair<string, string>("paterno",txtPaterno.Text),
+                            new KeyValuePair<string, string>("materno",txtMaterno.Text),
+                            new KeyValuePair<string, string>("usuario",txtCorreo.Text),
+                            new KeyValuePair<string, string>("password",txtPassword.Text),
+                            new KeyValuePair<string, string>("cveTipoUsuario","1")//1:Cliente
+                        });
+
+                    var myHttpClient = new HttpClient();
+                    var authData = string.Format("{0}:{1}", "tiendaUAQ", "t13nd4U4q");
+                    var authHeaderValue = Convert.ToBase64String(Encoding.UTF8.GetBytes(authData));
+                    myHttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", authHeaderValue);
+                    var response = await myHttpClient.PostAsync("http://189.211.201.181:88/TiendaUAQWebservice/api/tblusuarios/guardar/", formContent);
+                    var json = await response.Content.ReadAsStringAsync();
+                    RestClient c = new RestClient();
+                    var usuarioX = await c.convertirJson<Usuarios>(json);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var usuario = usuarioX.idUsuario;
+                        waitActivityIndicador.IsRunning = true;//Pone el de cargando
+                        Application.Current.Properties["idUsuarioTienda"] = usuario;
+                        var nombreUsuario = txtNombre.Text + " " + txtPaterno.Text + " " + txtMaterno.Text;
+                        string mensajeEnvioCorreo = enviarCorreo(txtCorreo.Text, nombreUsuario, txtCorreo.Text, txtPassword.Text);
+                        await DisplayAlert("Correcto", "Se registró correctamente. " + mensajeEnvioCorreo, "Aceptar");
+                        Application.Current.MainPage = new MenuPrincipal();//Reemplaza la pagina 
+                    }
+                    else
+                    {
+                        btnGuardar.IsEnabled = true;//Habilita el boton
+                        waitActivityIndicador.IsRunning = false;//Pone el de cargando
+                        await DisplayAlert("Error", "No se pudo registrar sus datos en la aplicación. Intente nuevamente.", "Aceptar");
+                    }
+                } else { 
+                    await DisplayAlert("Información", "El usuario ya existe. Intente con otro.", "Aceptar");
+                    txtCorreo.Focus();
+                    btnGuardar.IsEnabled = true;//Habilita el boton
+                    waitActivityIndicador.IsRunning = false;//quita el de cargando
+                }
+            } else{
+                await DisplayAlert("Información", "Error en la petición.", "Aceptar");
+                txtCorreo.Focus();
+                btnGuardar.IsEnabled = true;//Habilita el boton
+                waitActivityIndicador.IsRunning = false;//quita el de cargando
             }
         }
 
@@ -134,12 +164,10 @@ namespace TiendaUAQ.Views
                     UseDefaultCredentials = false,
                     Credentials = new NetworkCredential("tiendauaq@gmail.com", "t13nd4u4q")
                 }.Send(new MailMessage { From = new MailAddress(correoDestino, nombreUsuario), To = { correoDestino }, Subject = "Registro en la Tienda UAQ", Body = body,IsBodyHtml = true, BodyEncoding = Encoding.UTF8 });
-                //erroremail.Text = "Email has been sent successfully.";
                 mensaje = "Se envió un mensaje a su correo electrónico proporcionado.";
             }
             catch (Exception ex)
             {
-                //erroremail.Text = "ERROR: " + ex.Message;
                 mensaje = "Falló al enviar el mensaje a su correo electrónico. "+ex.Message;
             }
             return mensaje;

@@ -9,9 +9,10 @@ namespace TiendaUAQ.Models
         public int idProducto { get; set; }
         public string nombre { get; set; }
         public string descripcion { get; set; }
-        public double precio { get; set; }
+        public double precioUnitario { get; set; }
         public string url_imagen { get; set; }
         public int cveSubdepartamento { get; set; }
+        public int existencias { get; set; }
         public string activo { get; set; }
         public string fechaRegistro { get; set; }
         public string fechaActualizacion { get; set; }
@@ -19,6 +20,9 @@ namespace TiendaUAQ.Models
         public int cantidad { get; set; }
         public string nombreCantidad { get; set; }
         public int idDetallePedido { get; set; }
+        public double precio { get; set; }
+        public string estatusProducto { get; set; }
+        public string descripcionPrecio { get; set; }
     }
 
     public class ListaProductos{ public List<Productos> listaProductos { get; set; }}

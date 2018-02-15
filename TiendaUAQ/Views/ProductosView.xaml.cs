@@ -76,8 +76,9 @@ namespace TiendaUAQ.Views
                                     HorizontalOptions = LayoutOptions.Center,
                                     Opacity = 0.8
                                 };
+                                string estatusProducto = "# Existencias: " + productos.listaProductos[columnas].existencias + "."; 
                                 Productos producto = new Productos{idProducto = idProducto, nombre = nombre,
-                                    descripcion = productos.listaProductos[columnas].descripcion, precio = productos.listaProductos[columnas].precio, url_imagen = url_portada};
+                                    descripcion = productos.listaProductos[columnas].descripcion, precio = productos.listaProductos[columnas].precio,  precioUnitario = productos.listaProductos[columnas].precio, url_imagen = url_portada, estatusProducto = estatusProducto};
 
                                 //Se crea el evento del clic de la imagen
                                 var tapGestureRecognizer = new TapGestureRecognizer();

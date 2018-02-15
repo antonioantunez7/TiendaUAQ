@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
 using TiendaUAQ.Models;
+using TiendaUAQ.Services;
 using Xamarin.Forms;
 
 namespace TiendaUAQ.Views
@@ -30,24 +34,44 @@ namespace TiendaUAQ.Views
             btnIngresar.IsEnabled = false;//Deshabilita el boton
             Device.BeginInvokeOnMainThread(async () =>
             {
-                //RestClient cliente = new RestClient();
-                //var eventos = await cliente.Get<VistaEventos>("http://189.211.201.181:86/CulturaUAQWebservice/api/tbleventos");
-                var eventos = "default";
+                HttpClient cliente = new HttpClient();
+                var formContent = new FormUrlEncodedContent(new[]
+                {
+                    new KeyValuePair<string, string>("usuario",txtUsuario.Text),
+                    new KeyValuePair<string, string>("password",txtPassword.Text)
+                });
+                var myHttpClient = new HttpClient();
+                var authData = string.Format("{0}:{1}", "tiendaUAQ", "t13nd4U4q");
+                var authHeaderValue = Convert.ToBase64String(Encoding.UTF8.GetBytes(authData));
+                myHttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", authHeaderValue);
+                var response = await myHttpClient.PostAsync("http://189.211.201.181:88/TiendaUAQWebservice/api/tblusuarios/login", formContent);
+                var json = await response.Content.ReadAsStringAsync();
+                RestClient c = new RestClient();
+                var usuarioX = await c.convertirJson<Usuarios>(json);
                 btnIngresar.IsEnabled = true;//Habilita el boton
                 waitActivityIndicador.IsRunning = false;//Quita el de cargando
-                if (eventos != null)
+                if (response.IsSuccessStatusCode)
                 {
-                    int idUsuario = 1;
-                    string nombre = txtUsuario.Text;
-                    string paterno = "Paterno";
-                    string materno = "Materno";
-                    //Guarda las variables en la app, persistencia de los datos
-                    Application.Current.Properties["idUsuarioTienda"] = 2;
-                    Application.Current.Properties["nombre"] = nombre;
-                    Application.Current.Properties["paterno"] = "Paterno";
-                    Application.Current.Properties["materno"] = "Materno";
-                    Usuarios usuario = new Usuarios { idUsuario = idUsuario, nombre = nombre, paterno = paterno, materno = materno };
-                    Application.Current.MainPage = new MenuPrincipal();//Reemplaza la pagina
+                    if (usuarioX != null)
+                    {
+                        int idUsuario = usuarioX.idUsuario;
+                        string nombre = usuarioX.nombre;
+                        string paterno = usuarioX.paterno;
+                        string materno = usuarioX.materno;
+                        //Guarda las variables en la app, persistencia de los datos
+                        Application.Current.Properties["idUsuarioTienda"] = idUsuario;
+                        Application.Current.Properties["nombre"] = nombre;
+                        Application.Current.Properties["paterno"] = paterno;
+                        Application.Current.Properties["materno"] = materno;
+                        Usuarios usuario = new Usuarios { idUsuario = idUsuario, nombre = nombre, paterno = paterno, materno = materno };
+                        await DisplayAlert("Correcto", "Inició sesión correctamente.", "Aceptar");
+                        Application.Current.MainPage = new MenuPrincipal();//Reemplaza la pagina
+                    } else{
+                        await DisplayAlert("Información", "Usuario o contraseña no validos", "Aceptar");
+                        txtPassword.Text = string.Empty;
+                        txtPassword.Focus();
+                        return;    
+                    }
                 }
                 else
                 {

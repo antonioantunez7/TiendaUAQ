@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using TiendaUAQ.Models;
+using TiendaUAQ.Services;
 using Xamarin.Forms;
 
 namespace TiendaUAQ.Views
@@ -23,6 +25,9 @@ namespace TiendaUAQ.Views
                 new Models.Menu { id= 5, titulo = "Salir"/*, detalle = "Cerrar la aplicación."*/, icono = "salir.png"},
                 //new Models.Menu { id= 6, titulo = "Ingresar/Registrarse"/*, detalle = "Cerrar la aplicación."*/, icono = "acerca.png"}
             };
+            if(Application.Current.Properties.ContainsKey("idUsuarioTienda")){
+                menu.Add(new Models.Menu { id = 6, titulo = "Cuenta", icono = "acerca.png"});
+            }
             ListaMenu.ItemsSource = menu;
 
             Detail = new NavigationPage(new Buscador());//Se cambia para que sea la cartelera la primera en cargar
@@ -55,7 +60,11 @@ namespace TiendaUAQ.Views
                 }
                 if (menu.id == 5)//Salir
                 {
-                    var resp = await this.DisplayAlert("Confirmación", "¿Desea cerrar sesión?", "SI", "NO");
+                    string mensaje = "¿Deseas cerrar la aplicación?";
+                    if (Application.Current.Properties.ContainsKey("idUsuarioTienda")){
+                        mensaje = "¿Desea cerrar sesión?";     
+                    }
+                    var resp = await this.DisplayAlert("Confirmación", mensaje , "SI", "NO");
                     if (resp)
                     {
                         //Destruye las variables de sesión (persistencia de los datos)
@@ -68,17 +77,46 @@ namespace TiendaUAQ.Views
                             Application.Current.Properties.Remove("nombre");
                             Application.Current.Properties.Remove("paterno");
                             Application.Current.Properties.Remove("materno");
+                            Application.Current.MainPage = new MenuPrincipal();
+                        } else{
+                            System.Environment.Exit(0); 
                         }
-                        Application.Current.MainPage = new NavigationPage(new Inicio());
                     }
                 }
                 if (menu.id == 6)//Ingresar o registrarse
                 {
                     IsPresented = false;//Para que el menu desaparesca cuando se le haga click
-                    Detail = new NavigationPage(new Inicio());
+                    Detail = new NavigationPage(new Cuenta());
                 }
                 ListaMenu.SelectedItem = null;//Para que automaticamente se deseleccione el elemento
             }
+        }
+
+        void consultaCarrito()
+        {
+            if (Application.Current.Properties.ContainsKey("idUsuarioTienda"))
+            {
+                Device.BeginInvokeOnMainThread(async () =>
+                {
+                    RestClient cliente = new RestClient();
+                    var pedidos = await cliente.GetPedidos<Pedidos>("http://189.211.201.181:88/TiendaUAQWebservice/api/tbldetallespedidos/pedido/usuario/" + Application.Current.Properties["idUsuarioTienda"].ToString());
+                    Debug.WriteLine(pedidos);
+                    if (pedidos != null)
+                    {
+                        if (pedidos.idPedido != 0)
+                        {
+                            Application.Current.Properties["idPedido"] = pedidos.idPedido;
+                        }
+                    }
+                });
+
+            }
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            consultaCarrito();
         }
     }
 }

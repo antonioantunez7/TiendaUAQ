@@ -11,7 +11,7 @@
             <ScrollView x:Name="svIS">
                 <StackLayout Padding="10,30,10,10" Spacing="10">
                     <Label x:Name="etiquetaMsj" 
-                        Text="Presione el botón 'Iniciar sesión' para ingresar a la aplicación. Si no cuenta con un usuario y contraseña posteriormente presione 'Registrarse'."
+                        Text="Presione el botón 'Iniciar sesión' para ingresar a la aplicación o registrarse. Si no cuenta con un usuario y contraseña posteriormente presione 'Registrarse'."
                         HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"
                         HorizontalTextAlignment="Center" VerticalTextAlignment="Center"
                         FontAttributes="Bold" FontFamily="Futura-Medium"

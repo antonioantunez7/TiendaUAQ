@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="TiendaUAQ.Views.DireccionEnvio" Title="Dirección de envío">
+	<ContentPage.Content>
+        <ScrollView>
+            <StackLayout Padding="10,30,10,10" Spacing="10">
+                <!--<Label Text="Dirección de envío"
+                    FontFamily="Futura-Medium"
+                    Font="30"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center">
+                </Label>-->
+                <Label Text="Dirección de envío"
+                    FontFamily="Futura-Medium"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center">
+                </Label>
+                <ActivityIndicator x:Name="waitActivityIndicador"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"/>
+                <Label Text="Calle: "
+                    FontFamily="Futura-Medium"
+                    HorizontalOptions="Start"
+                    VerticalOptions="Center">
+                </Label>
+                <Entry x:Name="txtCalle"
+                    Placeholder="Ingrese la calle"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="Center">
+                </Entry>
+
+                <Label Text="Colonia: "
+                    FontFamily="Futura-Medium"
+                    HorizontalOptions="Start"
+                    VerticalOptions="Center">
+                </Label>
+                <Entry x:Name="txtColonia"
+                    Placeholder="Ingrese su colonia"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="Center">
+                </Entry>
+
+                <Label Text="Ciudad: "
+                    FontFamily="Futura-Medium"
+                    HorizontalOptions="Start"
+                    VerticalOptions="Center">
+                </Label>
+                <Entry x:Name="txtCiudad"
+                    Placeholder="Ingrese su ciudad"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="Center">
+                </Entry>
+
+                <Label Text="Estado: "
+                    FontFamily="Futura-Medium"
+                    HorizontalOptions="Start"
+                    VerticalOptions="Center">
+                </Label>
+                <Entry x:Name="txtEstado"
+                    Placeholder="Ingrese su estado"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="Center">
+                </Entry>
+
+                <Label Text="Código postal: "
+                    FontFamily="Futura-Medium"
+                    HorizontalOptions="Start"
+                    VerticalOptions="Center">
+                </Label>
+                <Entry x:Name="txtCP"
+                    Placeholder="Ingrese su código postal"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="Center">
+                </Entry>
+
+                <Button x:Name="btnContinuarPago"
+                    FontFamily="Futura-Medium"
+                    Clicked="realizarPago_Clicked"
+                    Text="Continuar"
+                    TextColor="White"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="Center">
+                </Button>
+                <Button x:Name="btnCancelar"
+                    FontFamily="Futura-Medium"
+                    Clicked="Cancelar_Clicked"
+                    Text="Cancelar"
+                    TextColor="White"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="Center">
+                </Button>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

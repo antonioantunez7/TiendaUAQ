@@ -112,6 +112,15 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\netstandard1.3\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="Xamarin.PayPal.iOS">
+      <HintPath>..\packages\Xamarin.PayPal.iOS.2.18.0\lib\Xamarin.iOS10\Xamarin.PayPal.iOS.dll</HintPath>
+    </Reference>
+    <Reference Include="PayPal.Forms.Abstractions">
+      <HintPath>..\packages\PayPal.Forms.2.18.1\lib\Xamarin.iOS10\PayPal.Forms.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="PayPal.Forms">
+      <HintPath>..\packages\PayPal.Forms.2.18.1\lib\Xamarin.iOS10\PayPal.Forms.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Contents.json" />

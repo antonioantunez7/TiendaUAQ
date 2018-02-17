@@ -5,6 +5,8 @@ using System.Diagnostics;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using PayPal.Forms;
+using PayPal.Forms.Abstractions;
 using TiendaUAQ.Models;
 using TiendaUAQ.Services;
 using Xamarin.Forms;
@@ -152,7 +154,13 @@ namespace TiendaUAQ.Views
 
         async void comprar(object sender, EventArgs e)
         {
-            await DisplayAlert("Información", "Ústed va a comprar todos los artículos al carrito.", "Aceptar");
+            if (Application.Current.Properties.ContainsKey("idUsuarioTienda"))
+            {
+                await Navigation.PushAsync(new DireccionEnvio());    
+            } else{
+                await Navigation.PushAsync(new Inicio());    
+            }
+            ///await DisplayAlert("Información", "Ústed va a comprar todos los artículos al carrito.", "Aceptar");
         }
 
         async void eliminarDelCarrito(object sender, System.EventArgs e)

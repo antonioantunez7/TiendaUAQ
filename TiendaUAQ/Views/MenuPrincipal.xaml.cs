@@ -71,12 +71,14 @@ namespace TiendaUAQ.Views
                         if (Application.Current.Properties.ContainsKey("idUsuarioTienda")
                             && Application.Current.Properties.ContainsKey("nombre")
                             && Application.Current.Properties.ContainsKey("paterno")
-                            && Application.Current.Properties.ContainsKey("materno"))
+                            && Application.Current.Properties.ContainsKey("materno")
+                            && Application.Current.Properties.ContainsKey("usuario"))
                         {
                             Application.Current.Properties.Remove("idUsuarioTienda");
                             Application.Current.Properties.Remove("nombre");
                             Application.Current.Properties.Remove("paterno");
                             Application.Current.Properties.Remove("materno");
+                            Application.Current.Properties.Remove("usuario");
                             Application.Current.MainPage = new MenuPrincipal();
                         } else{
                             System.Environment.Exit(0); 

@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net;
+using System.Net.Mail;
+using System.Text;
 using PayPal.Forms;
 using PayPal.Forms.Abstractions;
 using TiendaUAQ.Models;
@@ -60,15 +63,15 @@ namespace TiendaUAQ.Views
                 {
                     if (pedidos.idPedido != 0)
                     {
-                        Debug.WriteLine("\n\n ---- si entro a hacer el cobro");
                         int totalItems = pedidos.detalle.Count;
-                        Debug.WriteLine("\n\n" + totalItems);
                         int costoEnvio = 0;
                         int iva = 0;
                         var i = 0;
+                        double total = 0;
                         var procedePago = true;
                         string mensajeError = "";
                         PayPalItem[] items = new PayPalItem[totalItems];
+                        string cuerpoCorreo = "<html><body style='font-family: Arial, Helvetica, sans-serif;'><h2 style='color:#EC7063;'>Tienda UAQ</h2><p>Detalles de la compra: </p><table border='1' bordercolor='gray' style='border-collapse: collapse;' cellpadding='5'><thead><th style='color:#EC7063;'>Producto</th><th style='color:#EC7063;'>Precio</th></thead><tbody>";
                         foreach (var producto in pedidos.detalle)
                         {
                             if (producto.existencias == 0)
@@ -83,12 +86,15 @@ namespace TiendaUAQ.Views
                             }
                             else
                             {
+                                total = total + producto.precio;
                                 items[i] = new PayPalItem(producto.nombre, (uint)producto.cantidad, new Decimal(0.01), "MXN", producto.idProducto.ToString());
                                 //items[i] = new PayPalItem(producto.nombre, (uint)producto.cantidad, new Decimal(producto.precioUnitario), "MXN", producto.idProducto.ToString());
+                                cuerpoCorreo += "<tr><td>"+producto.nombre+" (Cant. "+producto.cantidad+")</td><td style='text-align:right'>$"+producto.precio+"</td></tr>";
                             }
                             i++;
 
                         }
+
                         if (procedePago)//si el pago procede
                         {
                             var result = await CrossPayPalManager.Current.Buy(
@@ -115,8 +121,13 @@ namespace TiendaUAQ.Views
                                 //var result2 = await Shipping
                                 Debug.WriteLine("\n\n\n ---------------- ");
                                 Debug.WriteLine(result.ServerResponse.Response.Id);
-                                string direccionCompletaEnvio = txtCalle.Text + ", " + txtColonia.Text + ", " + txtCiudad.Text + ", " + txtEstado.Text + ", " + txtCP.Text;
-                                await DisplayAlert("Correcto", "Se realizó el pago correctamente. " + direccionCompletaEnvio, "Aceptar");
+                                string direccionCompletaEnvio = txtCalle.Text + ", " + txtColonia.Text + ", " + txtCiudad.Text + ", " + txtEstado.Text + ", C.P.: " + txtCP.Text;
+                                cuerpoCorreo += "</tbody><tr><td style='color:#EC7063;'>Importe</td><td style='text-align:right'><b>$"+total+" MXN</b></td></tr></table><br><p>Dirección de envío:</p><p style='color:#EC7063;'>"+direccionCompletaEnvio+"</p><br><p style='color:gray;font-size:11px;'> *Este es un correo autom&aacute;tico, no es necesario responder.</p></html>";
+                                Debug.WriteLine(cuerpoCorreo);
+                                string nombreUsuario = Application.Current.Properties["nombre"] + " " + Application.Current.Properties["paterno"] + " " + Application.Current.Properties["materno"];
+                                string correoUsuarioX = Application.Current.Properties["usuario"].ToString();
+                                string respuestaCorreo = enviarCorreoCompra(correoUsuarioX,nombreUsuario,cuerpoCorreo);
+                                await DisplayAlert("Correcto", "Se realizó el pago correctamente. " + respuestaCorreo, "Aceptar");
                                 //Se debe de actualizar el pedido y cada uno de los artículos se debe disminuir el número de existencias
                                 await Navigation.PushAsync(new Carrito());
                             }
@@ -145,6 +156,30 @@ namespace TiendaUAQ.Views
         async void Cancelar_Clicked(object sender, System.EventArgs e)
         {
             await Navigation.PopAsync();
+        }
+
+        string enviarCorreoCompra(string correoDestino, string nombreUsuario, string cuerpoCorreo)
+        {
+            string mensaje = "";
+            try
+            {
+                new SmtpClient
+                {
+                    Host = "Smtp.Gmail.com",
+                    Port = 587,
+                    EnableSsl = true,
+                    Timeout = 10000,
+                    DeliveryMethod = SmtpDeliveryMethod.Network,
+                    UseDefaultCredentials = false,
+                    Credentials = new NetworkCredential("tiendauaq@gmail.com", "t13nd4u4q")
+                }.Send(new MailMessage { From = new MailAddress(correoDestino, nombreUsuario), To = { correoDestino }, Subject = "Compra realizada en la Tienda UAQ", Body = cuerpoCorreo, IsBodyHtml = true, BodyEncoding = Encoding.UTF8 });
+                mensaje = "Se envió el detalle de su compra a su correo electrónico.";
+            }
+            catch (Exception ex)
+            {
+                mensaje = "Falló al enviar el mensaje a su correo electrónico. " + ex.Message;
+            }
+            return mensaje;
         }
     }
 }

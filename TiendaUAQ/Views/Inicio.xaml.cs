@@ -58,11 +58,13 @@ namespace TiendaUAQ.Views
                         string nombre = usuarioX.nombre;
                         string paterno = usuarioX.paterno;
                         string materno = usuarioX.materno;
+                        string correo = usuarioX.usuario;
                         //Guarda las variables en la app, persistencia de los datos
                         Application.Current.Properties["idUsuarioTienda"] = idUsuario;
                         Application.Current.Properties["nombre"] = nombre;
                         Application.Current.Properties["paterno"] = paterno;
                         Application.Current.Properties["materno"] = materno;
+                        Application.Current.Properties["usuario"] = correo;
                         Usuarios usuario = new Usuarios { idUsuario = idUsuario, nombre = nombre, paterno = paterno, materno = materno };
                         await DisplayAlert("Correcto", "Inició sesión correctamente.", "Aceptar");
                         Application.Current.MainPage = new MenuPrincipal();//Reemplaza la pagina

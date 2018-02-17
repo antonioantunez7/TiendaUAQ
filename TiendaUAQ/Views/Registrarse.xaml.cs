@@ -119,6 +119,10 @@ namespace TiendaUAQ.Views
                         var usuario = usuarioX.idUsuario;
                         waitActivityIndicador.IsRunning = true;//Pone el de cargando
                         Application.Current.Properties["idUsuarioTienda"] = usuario;
+                        Application.Current.Properties["nombre"] = usuarioX.nombre;
+                        Application.Current.Properties["paterno"] = usuarioX.paterno;
+                        Application.Current.Properties["materno"] = usuarioX.materno;
+                        Application.Current.Properties["usuario"] = usuarioX.usuario;
                         var nombreUsuario = txtNombre.Text + " " + txtPaterno.Text + " " + txtMaterno.Text;
                         string mensajeEnvioCorreo = enviarCorreo(txtCorreo.Text, nombreUsuario, txtCorreo.Text, txtPassword.Text);
                         await DisplayAlert("Correcto", "Se registró correctamente. " + mensajeEnvioCorreo, "Aceptar");
@@ -150,7 +154,7 @@ namespace TiendaUAQ.Views
         }
 
         string enviarCorreo(string correoDestino, string nombreUsuario, string usuario, string password){
-            string body = "<html><body><h2 style='color:#EC7063;'>Tienda UAQ</h2><p>Se registr&oacute; con &eacute;xito en la aplicaci&oacute;n Tienda UAQ, sus datos para iniciar sesi&oacute;n son: </p><table><tr><td><b style='color:#EC7063;'>Usuario: </b></td><td>" + usuario + "</td></tr><tr><td><b style='color:#EC7063;'>Contrase&ntilde;a: </b></td><td>" + password + "</td></tr></table><br><p style='color:gray;font-size:11px;'>*Este es un correo autom&aacute;tico, no es necesario responder.</p></body></html>";
+            string body = "<html><body style='font-family: Arial, Helvetica, sans-serif;'><h2 style='color:#EC7063;'>Tienda UAQ</h2><p>Se registr&oacute; con &eacute;xito en la aplicaci&oacute;n Tienda UAQ, sus datos para iniciar sesi&oacute;n son: </p><table border='1' bordercolor='gray' style='border-collapse: collapse;' cellpadding='5'><tr><td><b style='color:#EC7063;'>Usuario: </b></td><td>" + usuario + "</td></tr><tr><td><b style='color:#EC7063;'>Contrase&ntilde;a: </b></td><td>" + password + "</td></tr></table><br><p style='color:gray;font-size:11px;'>*Este es un correo autom&aacute;tico, no es necesario responder.</p></body></html>";
             string mensaje = "";
             try
             {

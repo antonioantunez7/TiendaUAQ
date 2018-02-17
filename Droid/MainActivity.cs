@@ -47,6 +47,13 @@ namespace TiendaUAQ.Droid
         protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
         {
             base.OnActivityResult(requestCode, resultCode, data);
+            PayPalManagerImplementation.Manager.OnActivityResult(requestCode, resultCode, data);
+        }
+
+        protected override void OnDestroy()
+        {
+            base.OnDestroy();
+            PayPalManagerImplementation.Manager.Destroy();
         }
     }
 }

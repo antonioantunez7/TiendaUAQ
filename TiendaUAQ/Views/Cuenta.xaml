@@ -4,7 +4,7 @@
         <ScrollView>
             <StackLayout>
                 <ListView
-                    x:Name="DetalleCuenta" ItemsSource="{Binding DetalleCuenta}" VerticalOptions="FillAndExpand" HasUnevenRows="True" HeightRequest="100" BackgroundColor="#EC7063">
+                    x:Name="DetalleCuenta" ItemsSource="{Binding DetalleCuenta}" VerticalOptions="FillAndExpand" HasUnevenRows="True" HeightRequest="100" BackgroundColor="#FFFFFF">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
@@ -21,9 +21,11 @@
                                             </StackLayout>
                                         </StackLayout>
                                         <ScrollView Grid.Row="1">
-                                            <StackLayout Orientation="Vertical" Padding="16,20,16,20" Spacing="5">
-                                                <Label Text="{Binding nombre}" FontSize="22" FontAttributes="Bold" HorizontalOptions="Center" FontFamily="Futura-Medium" TextColor="#FFFFFF"></Label>
-                                            </StackLayout>
+                                            <Frame>
+                                                <StackLayout Orientation="Vertical" Padding="16,20,16,20" Spacing="5">
+                                                    <Label Text="{Binding nombre}" FontSize="22" FontAttributes="Bold" HorizontalOptions="Center" FontFamily="Futura-Medium" TextColor="#EC7063"></Label>
+                                                </StackLayout>
+                                            </Frame>
                                         </ScrollView>
                                     </Grid>
                                 </ViewCell.View>
@@ -31,21 +33,15 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-                <!--<ListView
-                    x:Name="listaOpciones" ItemsSource="{Binding listaOpciones}" VerticalOptions="FillAndExpand" HasUnevenRows="True" ItemSelected="seleccionaOpcion_ItemSelected">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <ViewCell>
-                                <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" Padding="5,5,5,5">
-                                    <Image Source="{Binding icono}" HorizontalOptions="End" AbsoluteLayout.LayoutBounds="250.25, 0.25, 50, 50 "/>
-                                    <StackLayout Orientation="Vertical">
-                                        <Label Text = "{Binding nombre}" FontSize="20" AbsoluteLayout.LayoutBounds="0.25, 0.25, 400, 40" FontFamily="Futura-Medium"/>
-                                    </StackLayout>
-                                </StackLayout>
-                            </ViewCell>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>-->
+                <StackLayout Orientation="Vertical" Padding="5,40,16,40">
+                    <Button x:Name="btnRecuperarContrasena"
+                            Clicked="recuperarContrasena"
+                            FontFamily="Futura-Medium"
+                            Text="Recuperar contraseña"
+                            TextColor="White"
+                            VerticalOptions="Center">
+                    </Button>
+                </StackLayout>
             </StackLayout>
        </ScrollView>   
 	</ContentPage.Content>

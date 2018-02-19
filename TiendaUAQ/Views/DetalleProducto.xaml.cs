@@ -82,7 +82,10 @@ namespace TiendaUAQ.Views
                     if (productos.idProducto > 0)
                     {
                         int existencias = productos.existencias;
-                        if (cantidadArticulos <= existencias)
+                        if (existencias == 0)
+                        {
+                            await DisplayAlert("Información", "Artículo agotado.", "Aceptar");
+                        } else if (cantidadArticulos <= existencias)
                         {
                             HttpClient cliente = new HttpClient();
                             Double precioProds = precioUnitario * cantidadArticulos;
@@ -124,10 +127,10 @@ namespace TiendaUAQ.Views
                             }
                             else
                             {
-                                await DisplayAlert("Error", "No se pudo agregar el producto al carrito. Intente nuevamente.", "Aceptar");
+                                await DisplayAlert("Información", "No se pudo agregar el producto al carrito. Intente nuevamente.", "Aceptar");
                             }
                         } else{
-                            await DisplayAlert("Error", "No se cuenta con "+cantidadArticulos+" artículos disponibles. Puede agregar máximo "+existencias+" artículos.", "Aceptar");    
+                            await DisplayAlert("Información", "No se cuenta con "+cantidadArticulos+" artículos disponibles. Puede agregar máximo "+existencias+" artículos.", "Aceptar");    
                         }
                     } else{
                         await DisplayAlert("Error", "No encontró el producto. Intente nuevamente.", "Aceptar");
@@ -162,8 +165,6 @@ namespace TiendaUAQ.Views
                         int existencias = productos.existencias;
                         if (cantidadArticulos <= existencias)
                         {
-
-
                             HttpClient cliente = new HttpClient();
                             Double precioProds = precioUnitario * cantidadArticulos;
                             FormUrlEncodedContent formContent = null;

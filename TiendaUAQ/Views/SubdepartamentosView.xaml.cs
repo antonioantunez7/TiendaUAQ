@@ -42,7 +42,7 @@ namespace TiendaUAQ.Views
                         var imagen = new Image()
                         {
                             Source = url_portada,
-                            WidthRequest = 350,
+                            WidthRequest = 500,
                             BackgroundColor = Color.FromHex("EC7063"),
                             VerticalOptions = LayoutOptions.Center,
                             HorizontalOptions = LayoutOptions.FillAndExpand,

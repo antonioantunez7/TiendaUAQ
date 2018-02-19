@@ -148,6 +148,10 @@ namespace TiendaUAQ.Views
                                         string correoUsuarioX = Application.Current.Properties["usuario"].ToString();
                                         string respuestaCorreo = enviarCorreoCompra(correoUsuarioX, nombreUsuario, cuerpoCorreo);
                                         await DisplayAlert("Correcto", "Se realizó el pago correctamente. " + respuestaCorreo, "Aceptar");
+                                        if (Application.Current.Properties.ContainsKey("idPedido"))
+                                        {
+                                            Application.Current.Properties.Remove("idPedido");//Primero lo debe eliminar en caso de que existe para que en la validacion si existe pedido lo agregue    
+                                        }
                                         //Se debe de actualizar el pedido y cada uno de los artículos se debe disminuir el número de existencias
                                         await Navigation.PushAsync(new Carrito());
                                     } else{

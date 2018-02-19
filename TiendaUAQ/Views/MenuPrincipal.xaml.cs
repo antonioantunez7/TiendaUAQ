@@ -19,14 +19,14 @@ namespace TiendaUAQ.Views
         {
             List<Models.Menu> menu = new List<Models.Menu>{//Le cambie Menu a Models.Menu porque al ejecutarlo en iOS manda error de ambiguo
                 new Models.Menu { id= 1, titulo = "Inicio"/*, detalle = "Regresa a la página de inicio."*/, icono = "inicio.png"},
-                new Models.Menu { id= 2, titulo = "Carrito de compras"/*, detalle = "Regresa a la página de super."*/, icono = "icono.png"},
-                new Models.Menu { id= 3, titulo = "Departamentos"/*, detalle = "Regresa a la página de departamentos."*/, icono = "icono.png"},
+                new Models.Menu { id= 2, titulo = "Carrito de compras"/*, detalle = "Regresa a la página de super."*/, icono = "carrito.png"},
+                new Models.Menu { id= 3, titulo = "Departamentos"/*, detalle = "Regresa a la página de departamentos."*/, icono = "categorias.png"},
                 new Models.Menu { id= 4, titulo = "Acerca de"/*, detalle = "Regresa a la página de acerca de."*/, icono = "acerca.png"},
                 new Models.Menu { id= 5, titulo = "Salir"/*, detalle = "Cerrar la aplicación."*/, icono = "salir.png"},
                 //new Models.Menu { id= 6, titulo = "Ingresar/Registrarse"/*, detalle = "Cerrar la aplicación."*/, icono = "acerca.png"}
             };
             if(Application.Current.Properties.ContainsKey("idUsuarioTienda")){
-                menu.Add(new Models.Menu { id = 6, titulo = "Cuenta", icono = "acerca.png"});
+                menu.Add(new Models.Menu { id = 6, titulo = "Cuenta", icono = "cuenta.png"});
             }
             ListaMenu.ItemsSource = menu;
 

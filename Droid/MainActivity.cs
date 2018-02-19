@@ -12,7 +12,7 @@ using PayPal.Forms.Abstractions;
 
 namespace TiendaUAQ.Droid
 {
-    [Activity(Label = "Tienda UAQ", Icon = "@drawable/icono", Theme = "@style/MyTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+    [Activity(Label = "Tienda UAQ", Icon = "@drawable/iconoTienda", Theme = "@style/MyTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         protected override void OnCreate(Bundle bundle)

@@ -125,12 +125,20 @@ namespace TiendaUAQ.Views
                         }
                         else
                         {
+                            if (Application.Current.Properties.ContainsKey("idPedido"))
+                            {
+                                Application.Current.Properties.Remove("idPedido");//Primero lo debe eliminar en caso de que existe para que en la validacion si existe pedido lo agregue    
+                            }
                             etiquetaCargando.Text = "El carrito esta vacío.";
                             svProductos.Content = etiquetaCargando;
                         }
                     }
                     else
                     {
+                        if (Application.Current.Properties.ContainsKey("idPedido"))
+                        {
+                            Application.Current.Properties.Remove("idPedido");//Primero lo debe eliminar en caso de que existe para que en la validacion si existe pedido lo agregue    
+                        }
                         etiquetaCargando.Text = "Error de conexión.";
                         svProductos.Content = etiquetaCargando;
                     }

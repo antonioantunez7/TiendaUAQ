@@ -64,6 +64,7 @@ namespace TiendaUAQ.Views
 
         async void agregarAlCarrito(object sender, System.EventArgs e)
         {
+            Button boton = (Button)sender;
             if (Application.Current.Properties.ContainsKey("idUsuarioTienda"))
             {
                 if (cantidadArticulos == 0)
@@ -71,7 +72,7 @@ namespace TiendaUAQ.Views
                     await DisplayAlert("Información", "Seleccione la cantidad de artículos que desea agregar al carrito", "Aceptar");
                     return;
                 }
-                Button boton = (Button)sender;
+                boton.IsEnabled = false;
                 var idProducto = boton.CommandParameter;
                 //Valida las existencias del producto
                 RestClient cliente1 = new RestClient();
@@ -97,7 +98,8 @@ namespace TiendaUAQ.Views
                                     new KeyValuePair<string, string>("idPedido", Application.Current.Properties["idPedido"].ToString()),
                                     new KeyValuePair<string, string>("idProducto",idProducto.ToString()),
                                     new KeyValuePair<string, string>("cantidad",cantidadArticulos.ToString()),
-                                    new KeyValuePair<string, string>("precio",precioProds.ToString())
+                                    new KeyValuePair<string, string>("precio",precioProds.ToString()),
+                                    new KeyValuePair<string, string>("idusuario",Application.Current.Properties["idUsuarioTienda"].ToString())
                                 });
                             }
                             else
@@ -141,6 +143,8 @@ namespace TiendaUAQ.Views
             } else{
                 await Navigation.PushAsync(new Inicio());   
             }
+            boton.IsEnabled = true;
+
         }
 
         async void modificarDelCarrito(object sender, System.EventArgs e)
@@ -263,11 +267,15 @@ namespace TiendaUAQ.Views
         {
             //await DisplayAlert("Información", "consultaDetallePedido.", "Aceptar");
             base.OnAppearing();
+            //idDetallePedido = 0;
+            //articulosAgregados = 0;
+            //cantidadArticulos = 0;
             if (Application.Current.Properties.ContainsKey("idPedido"))
             {
                 Device.BeginInvokeOnMainThread(async () =>
                 {
                     RestClient cliente = new RestClient();
+                    Console.WriteLine("http://189.211.201.181:88/TiendaUAQWebservice/api/tbldetallespedidos/existe/producto/" + idProductoGlobal + "/pedido/" + Application.Current.Properties["idPedido"].ToString());
                     var detallepedido = await cliente.GetDetallePedido<DetallePedido>("http://189.211.201.181:88/TiendaUAQWebservice/api/tbldetallespedidos/existe/producto/" + idProductoGlobal + "/pedido/" + Application.Current.Properties["idPedido"].ToString());
                     if (detallepedido != null)
                     {

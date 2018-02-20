@@ -149,6 +149,7 @@ namespace TiendaUAQ.Views
 
         async void modificarDelCarrito(object sender, System.EventArgs e)
         {
+            Button boton = (Button)sender;
             if (Application.Current.Properties.ContainsKey("idUsuarioTienda"))
             {
                 if (cantidadArticulos == 0)
@@ -156,7 +157,7 @@ namespace TiendaUAQ.Views
                     await DisplayAlert("Información", "Seleccione la cantidad de artículos que desea agregar al carrito", "Aceptar");
                     return;
                 }
-                Button boton = (Button)sender;
+                boton.IsEnabled = false;
                 var idProducto = boton.CommandParameter;
                 //Valida las existencias del producto
                 RestClient cliente1 = new RestClient();
@@ -225,6 +226,7 @@ namespace TiendaUAQ.Views
             {
                 await Navigation.PushAsync(new Inicio());
             }
+            boton.IsEnabled = true;
         }
 
         async void verCarrito(object sender, System.EventArgs e){

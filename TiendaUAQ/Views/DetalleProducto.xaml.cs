@@ -268,7 +268,6 @@ namespace TiendaUAQ.Views
         async protected override void OnAppearing()
         {
             base.OnAppearing();
-            consultaCarrito();
             //idDetallePedido = 0;
             //articulosAgregados = 0;
             //cantidadArticulos = 0;
@@ -290,31 +289,6 @@ namespace TiendaUAQ.Views
                         }
                     }
                 });
-            }
-        }
-
-        void consultaCarrito()
-        {
-            if (Application.Current.Properties.ContainsKey("idUsuarioTienda"))
-            {
-                if (Application.Current.Properties.ContainsKey("idPedido"))
-                {
-                    Application.Current.Properties.Remove("idPedido");//Primero lo debe eliminar en caso de que existe para que en la validacion si existe pedido lo agregue    
-                }
-                Device.BeginInvokeOnMainThread(async () =>
-                {
-                    RestClient cliente = new RestClient();
-                    var pedidos = await cliente.GetPedidos<Pedidos>("http://189.211.201.181:88/TiendaUAQWebservice/api/tbldetallespedidos/pedido/usuario/" + Application.Current.Properties["idUsuarioTienda"].ToString());
-                    Debug.WriteLine(pedidos);
-                    if (pedidos != null)
-                    {
-                        if (pedidos.idPedido != 0)
-                        {
-                            Application.Current.Properties["idPedido"] = pedidos.idPedido;
-                        }
-                    }
-                });
-
             }
         }
 

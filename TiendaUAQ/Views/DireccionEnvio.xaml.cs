@@ -90,8 +90,8 @@ namespace TiendaUAQ.Views
                                 else
                                 {
                                     total = total + producto.precio;
-                                    items[i] = new PayPalItem(producto.nombre, (uint)producto.cantidad, new Decimal(0.01), "MXN", producto.idProducto.ToString());
-                                //items[i] = new PayPalItem(producto.nombre, (uint)producto.cantidad, new Decimal(producto.precioUnitario), "MXN", producto.idProducto.ToString());
+                                    //items[i] = new PayPalItem(producto.nombre, (uint)producto.cantidad, new Decimal(0.01), "MXN", producto.idProducto.ToString());
+                                    items[i] = new PayPalItem(producto.nombre, (uint)producto.cantidad, new Decimal(producto.precioUnitario), "MXN", producto.idProducto.ToString());
                                 cuerpoCorreo += "<tr><td>" + producto.nombre + " (Cant. " + producto.cantidad + ")</td><td style='text-align:right'>$" + producto.precio + "</td></tr>";
                                 }
                                 i++;

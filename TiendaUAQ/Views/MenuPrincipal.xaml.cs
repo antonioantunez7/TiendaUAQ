@@ -121,7 +121,7 @@ namespace TiendaUAQ.Views
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            //consultaCarrito();
+            consultaCarrito();
         }
     }
 }

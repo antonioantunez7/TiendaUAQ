@@ -17,6 +17,7 @@ namespace TiendaUAQ.Views
     {
         public ObservableCollection<Productos> lproductos { get; set; }
         int cantidad = 0;
+        double total = 0;
         public Carrito()
         {
             InitializeComponent();
@@ -39,7 +40,7 @@ namespace TiendaUAQ.Views
                         if (pedidos.idPedido != 0)
                         {
                             lproductos = new ObservableCollection<Productos>();
-                            double total = 0;
+
                             foreach (var producto in pedidos.detalle)
                             {
                                 string url_portada = "http://189.211.201.181:88/" + producto.url_imagen;
@@ -53,7 +54,6 @@ namespace TiendaUAQ.Views
                                     estatusProducto = "# Existencias: "+producto.existencias+". Seleccione y cambie la cantidad de productos.";       
                                     descripcionPrecio = "? [No contemplado]";
                                 }
-
                                 lproductos.Add(new Productos
                                 {
                                     idProducto = producto.idProducto,
@@ -164,7 +164,12 @@ namespace TiendaUAQ.Views
         {
             if (Application.Current.Properties.ContainsKey("idUsuarioTienda"))
             {
-                await Navigation.PushAsync(new DireccionEnvio());    
+                if (total > 0)
+                {
+                    await Navigation.PushAsync(new DireccionEnvio());
+                } else{
+                    await DisplayAlert("Error", "No hay artículo disponibles del listado del carrito. O su total a pagar es $0 MXN.", "Aceptar");
+                }
             } else{
                 await Navigation.PushAsync(new Inicio());    
             }

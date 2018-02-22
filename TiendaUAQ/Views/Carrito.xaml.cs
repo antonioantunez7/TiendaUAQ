@@ -39,6 +39,7 @@ namespace TiendaUAQ.Views
                     {
                         if (pedidos.idPedido != 0)
                         {
+                            Application.Current.Properties["idPedido"] = pedidos.idPedido;
                             lproductos = new ObservableCollection<Productos>();
 
                             foreach (var producto in pedidos.detalle)
@@ -166,7 +167,12 @@ namespace TiendaUAQ.Views
             {
                 if (total > 0)
                 {
-                    await Navigation.PushAsync(new DireccionEnvio());
+                    if (Application.Current.Properties.ContainsKey("idPedido"))
+                    {
+                        await Navigation.PushAsync(new DireccionEnvio());
+                    } else{
+                        await DisplayAlert("Error", "No existe el idPedido. Verifique o comuniquese con el administrador.", "Aceptar");    
+                    }
                 } else{
                     await DisplayAlert("Error", "No hay artículo disponibles del listado del carrito. O su total a pagar es $0 MXN.", "Aceptar");
                 }

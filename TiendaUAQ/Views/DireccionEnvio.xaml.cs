@@ -66,6 +66,7 @@ namespace TiendaUAQ.Views
                     {
                         if (pedidos.idPedido != 0)
                         {
+                            Application.Current.Properties["idPedido"] = pedidos.idPedido;
                             int totalItems = pedidos.detalle.Count;
                             int costoEnvio = 0;
                             int iva = 0;
@@ -125,37 +126,43 @@ namespace TiendaUAQ.Views
                                     string referencia = result.ServerResponse.Response.Id;
                                     if (referencia != "")
                                     {
-                                        var formContent = new FormUrlEncodedContent(new[]
+                                        try
                                         {
-                                            new KeyValuePair<string, string>("idPedido", Application.Current.Properties["idPedido"].ToString()),
+                                            var formContent = new FormUrlEncodedContent(new[]
+                                            {
+                                                new KeyValuePair<string, string>("idPedido", pedidos.idPedido.ToString()),
                                             new KeyValuePair<string, string>("direccion",direccionCompletaEnvio),
                                             new KeyValuePair<string, string>("referencia",referencia),
                                             new KeyValuePair<string, string>("importe",total.ToString())
                                         });
-                                        var myHttpClient = new HttpClient();
-                                        var authData = string.Format("{0}:{1}", "tiendaUAQ", "t13nd4U4q");
-                                        var authHeaderValue = Convert.ToBase64String(Encoding.UTF8.GetBytes(authData));
-                                        myHttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", authHeaderValue);
-                                        var response = await myHttpClient.PostAsync("http://189.211.201.181:88/TiendaUAQWebService/api/tblpedidos/compra", formContent);
-                                        var json = await response.Content.ReadAsStringAsync();
-                                        if (response.IsSuccessStatusCode)
-                                        {
-                                            if (Application.Current.Properties.ContainsKey("idPedido"))
+                                            var myHttpClient = new HttpClient();
+                                            var authData = string.Format("{0}:{1}", "tiendaUAQ", "t13nd4U4q");
+                                            var authHeaderValue = Convert.ToBase64String(Encoding.UTF8.GetBytes(authData));
+                                            myHttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", authHeaderValue);
+                                            var response = await myHttpClient.PostAsync("http://189.211.201.181:88/TiendaUAQWebService/api/tblpedidos/compra", formContent);
+                                            var json = await response.Content.ReadAsStringAsync();
+                                            if (response.IsSuccessStatusCode)
                                             {
-                                                Application.Current.Properties.Remove("idPedido");//Primero lo debe eliminar en caso de que existe para que en la validacion si existe pedido lo agregue    
+                                                if (Application.Current.Properties.ContainsKey("idPedido"))
+                                                {
+                                                    Application.Current.Properties.Remove("idPedido");//Primero lo debe eliminar en caso de que existe para que en la validacion si existe pedido lo agregue    
+                                                }
+                                                cuerpoCorreo += "</tbody><tr><td style='color:#EC7063;'>Importe</td><td style='text-align:right'><b>$" + total + " MXN</b></td></tr></table><br><p>Dirección de envío:</p><p style='color:#EC7063;'>" + direccionCompletaEnvio + "</p><br><p style='color:gray;font-size:11px;'> *Este es un correo autom&aacute;tico, no es necesario responder.</p></html>";
+                                                Debug.WriteLine(cuerpoCorreo);
+                                                string nombreUsuario = Application.Current.Properties["nombre"] + " " + Application.Current.Properties["paterno"] + " " + Application.Current.Properties["materno"];
+                                                string correoUsuarioX = Application.Current.Properties["usuario"].ToString();
+                                                string respuestaCorreo = enviarCorreoCompra(correoUsuarioX, nombreUsuario, cuerpoCorreo);
+                                                await DisplayAlert("Correcto", "Se realizó el pago correctamente. " + respuestaCorreo, "Aceptar");
+                                                //Se debe de actualizar el pedido y cada uno de los artículos se debe disminuir el número de existencias
+                                                await Navigation.PushAsync(new Carrito());
                                             }
-                                            cuerpoCorreo += "</tbody><tr><td style='color:#EC7063;'>Importe</td><td style='text-align:right'><b>$" + total + " MXN</b></td></tr></table><br><p>Dirección de envío:</p><p style='color:#EC7063;'>" + direccionCompletaEnvio + "</p><br><p style='color:gray;font-size:11px;'> *Este es un correo autom&aacute;tico, no es necesario responder.</p></html>";
-                                            Debug.WriteLine(cuerpoCorreo);
-                                            string nombreUsuario = Application.Current.Properties["nombre"] + " " + Application.Current.Properties["paterno"] + " " + Application.Current.Properties["materno"];
-                                            string correoUsuarioX = Application.Current.Properties["usuario"].ToString();
-                                            string respuestaCorreo = enviarCorreoCompra(correoUsuarioX, nombreUsuario, cuerpoCorreo);
-                                            await DisplayAlert("Correcto", "Se realizó el pago correctamente. " + respuestaCorreo, "Aceptar");
-                                            //Se debe de actualizar el pedido y cada uno de los artículos se debe disminuir el número de existencias
-                                            await Navigation.PushAsync(new Carrito());
-                                        }
-                                        else
-                                        {
-                                            await DisplayAlert("Error", "No se realizó el pago correctamente el pago, sin embargo se realizó el cobro. Verifique con el administradors", "Aceptar");
+                                            else
+                                            {
+                                                await DisplayAlert("Error", "No se realizó el pago correctamente el pago, sin embargo se realizó el cobro. Verifique con el administradors", "Aceptar");
+                                            }
+                                        } catch(Exception ex){
+                                            Debug.WriteLine("\n Tryyyyyy ");
+                                            Debug.WriteLine(ex.ToString());    
                                         }
                                     }else{
                                         await DisplayAlert("Error", "No se recibió referencia de pago.", "Aceptar");

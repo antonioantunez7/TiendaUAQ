@@ -119,7 +119,7 @@ namespace TiendaUAQ.Services
                 if (respuesta.StatusCode == System.Net.HttpStatusCode.OK)
                 {
                     var jsonRespuesta = await respuesta.Content.ReadAsStringAsync();
-                    if(jsonRespuesta.Contains("idProducto")){
+                    if(jsonRespuesta.Contains("idPedido")){
                         return Newtonsoft.Json.JsonConvert.DeserializeObject<T>(jsonRespuesta);
                     } else{
                         var jsonArmado = "{'idPedido':'0'}";

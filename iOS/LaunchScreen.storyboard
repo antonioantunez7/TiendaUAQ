@@ -40,9 +40,10 @@
         <image name="inicio.png" width="32" height="32"/>
         <image name="salir.png" width="32" height="32"/>
         <image name="buscador2.png" width="48" height="48"/>
-        <image name="carrtito.png" width="32" height="32"/>
         <image name="categorias.png" width="32" height="32"/>
         <image name="cuenta.png" width="32" height="32"/>
         <image name="tiendaSplash.png" width="500" height="760"/>
+        <image name="carrito.png" width="32" height="32"/>
+        <image name="iconoTienda.png" width="128" height="128"/>
     </resources>
 </document>

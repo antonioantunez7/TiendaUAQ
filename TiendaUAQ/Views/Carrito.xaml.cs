@@ -39,6 +39,10 @@ namespace TiendaUAQ.Views
                     {
                         if (pedidos.idPedido != 0)
                         {
+                            if (Application.Current.Properties.ContainsKey("idPedido"))
+                            {
+                                Application.Current.Properties.Remove("idPedido");//Primero lo debe eliminar en caso de que existe para que en la validacion si existe pedido lo agregue    
+                            }
                             Application.Current.Properties["idPedido"] = pedidos.idPedido;
                             lproductos = new ObservableCollection<Productos>();
 

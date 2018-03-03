@@ -76,7 +76,7 @@ namespace TiendaUAQ.Views
                 var idProducto = boton.CommandParameter;
                 //Valida las existencias del producto
                 RestClient cliente1 = new RestClient();
-                var productos = await cliente1.GetPrductosId<Productos>("http://189.211.201.181:88/TiendaUAQWebservice/api/tblproductos/idProducto/" + idProductoGlobal);
+                var productos = await cliente1.GetPrductosId<Productos>("http://148.240.202.160:88/TiendaUAQWebservice/api/tblproductos/idProducto/" + idProductoGlobal);
                 Debug.Write(productos);
                 if (productos != null)
                 {
@@ -116,7 +116,7 @@ namespace TiendaUAQ.Views
                             var authData = string.Format("{0}:{1}", "tiendaUAQ", "t13nd4U4q");
                             var authHeaderValue = Convert.ToBase64String(Encoding.UTF8.GetBytes(authData));
                             myHttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", authHeaderValue);
-                            var response = await myHttpClient.PostAsync("http://189.211.201.181:88/TiendaUAQWebservice/api/tbldetallespedidos/carrito/guardar/", formContent);
+                            var response = await myHttpClient.PostAsync("http://148.240.202.160:88/TiendaUAQWebservice/api/tbldetallespedidos/carrito/guardar/", formContent);
                             var json = await response.Content.ReadAsStringAsync();
                             RestClient c = new RestClient();
                             var pedidoX = await c.convertirJson<Pedidos>(json);
@@ -161,7 +161,7 @@ namespace TiendaUAQ.Views
                 var idProducto = boton.CommandParameter;
                 //Valida las existencias del producto
                 RestClient cliente1 = new RestClient();
-                var productos = await cliente1.GetPrductosId<Productos>("http://189.211.201.181:88/TiendaUAQWebservice/api/tblproductos/idProducto/" + idProductoGlobal);
+                var productos = await cliente1.GetPrductosId<Productos>("http://148.240.202.160:88/TiendaUAQWebservice/api/tblproductos/idProducto/" + idProductoGlobal);
                 Debug.Write(productos);
                 if (productos != null)
                 {
@@ -192,7 +192,7 @@ namespace TiendaUAQ.Views
                             var authData = string.Format("{0}:{1}", "tiendaUAQ", "t13nd4U4q");
                             var authHeaderValue = Convert.ToBase64String(Encoding.UTF8.GetBytes(authData));
                             myHttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", authHeaderValue);
-                            var response = await myHttpClient.PostAsync("http://189.211.201.181:88/TiendaUAQWebservice/api/tbldetallespedidos/guardar/", formContent);
+                            var response = await myHttpClient.PostAsync("http://148.240.202.160:88/TiendaUAQWebservice/api/tbldetallespedidos/guardar/", formContent);
                             var json = await response.Content.ReadAsStringAsync();
                             RestClient c = new RestClient();
                             var detallepedidoX = await c.convertirJson<DetallePedido>(json);
@@ -276,8 +276,8 @@ namespace TiendaUAQ.Views
                 Device.BeginInvokeOnMainThread(async () =>
                 {
                     RestClient cliente = new RestClient();
-                    Console.WriteLine("http://189.211.201.181:88/TiendaUAQWebservice/api/tbldetallespedidos/existe/producto/" + idProductoGlobal + "/pedido/" + Application.Current.Properties["idPedido"].ToString());
-                    var detallepedido = await cliente.GetDetallePedido<DetallePedido>("http://189.211.201.181:88/TiendaUAQWebservice/api/tbldetallespedidos/existe/producto/" + idProductoGlobal + "/pedido/" + Application.Current.Properties["idPedido"].ToString());
+                    Console.WriteLine("http://148.240.202.160:88/TiendaUAQWebservice/api/tbldetallespedidos/existe/producto/" + idProductoGlobal + "/pedido/" + Application.Current.Properties["idPedido"].ToString());
+                    var detallepedido = await cliente.GetDetallePedido<DetallePedido>("http://148.240.202.160:88/TiendaUAQWebservice/api/tbldetallespedidos/existe/producto/" + idProductoGlobal + "/pedido/" + Application.Current.Properties["idPedido"].ToString());
                     if (detallepedido != null)
                     {
                         if (detallepedido.idDetallePedido != 0)

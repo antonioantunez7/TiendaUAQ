@@ -23,7 +23,7 @@ namespace TiendaUAQ.Views
             Device.BeginInvokeOnMainThread(async () =>
             {
                 RestClient cliente = new RestClient();
-                var subdepartamentosX = await cliente.GetSubdepartamentos<ListaSubdepartamentos>("http://189.211.201.181:88/TiendaUAQWebservice/api/tblsubdepartamentos/departamento/"+cveDepartamento);
+                var subdepartamentosX = await cliente.GetSubdepartamentos<ListaSubdepartamentos>("http://148.240.202.160:88/TiendaUAQWebservice/api/tblsubdepartamentos/departamento/"+cveDepartamento);
                 Debug.Write(subdepartamentosX);
                 if (subdepartamentosX != null)
                 {

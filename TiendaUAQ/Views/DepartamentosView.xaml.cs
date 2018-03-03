@@ -23,7 +23,7 @@ namespace TiendaUAQ.Views
             Device.BeginInvokeOnMainThread(async () =>
             {
                 RestClient cliente = new RestClient();
-                var departamentos = await cliente.GetDepartamentos<ListaDepartamentos>("http://189.211.201.181:88/TiendaUAQWebservice/api/tbldepartamentos");
+                var departamentos = await cliente.GetDepartamentos<ListaDepartamentos>("http://148.240.202.160:88/TiendaUAQWebservice/api/tbldepartamentos");
                 Debug.Write(departamentos);
                 if (departamentos != null)
                 {
@@ -64,7 +64,7 @@ namespace TiendaUAQ.Views
                                 int cveDepartamento = departamentos.listaDepartamentos[columnas].cveDepartamento;
                                 string descDepartamento = departamentos.listaDepartamentos[columnas].descDepartamento;
                                 //string descCategoria = categorias.listaCategorias[columnas].descCategoria;
-                                string url_portada = "http://189.211.201.181:88/" + departamentos.listaDepartamentos[columnas].url_portada;
+                                string url_portada = "http://148.240.202.160:88/" + departamentos.listaDepartamentos[columnas].url_portada;
                                 //string url_portada = "http://www.generaccion.com/w/imagenes/galerias/7892-20_04_2012_15_02_14_1492029543.jpg";
                                 Debug.Write(url_portada);
                                 var imagen = new Image()

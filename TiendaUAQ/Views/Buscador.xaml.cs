@@ -39,7 +39,7 @@ namespace TiendaUAQ.Views
             Device.BeginInvokeOnMainThread(async () =>
             {
                 RestClient cliente = new RestClient();
-                var productos = await cliente.GetProductos<ListaProductos>("http://189.211.201.181:88/TiendaUAQWebservice/api/tblproductos/"+palabra);
+                var productos = await cliente.GetProductos<ListaProductos>("http://148.240.202.160:88/TiendaUAQWebservice/api/tblproductos/"+palabra);
                 Debug.Write(productos);
                 if (productos != null)
                 {
@@ -77,7 +77,7 @@ namespace TiendaUAQ.Views
                                 //Crear el objeto a insertar
                                 int idProducto = productos.listaProductos[columnas].idProducto;
                                 string nombre = productos.listaProductos[columnas].nombre;
-                                string url_portada = "http://189.211.201.181:88/" + productos.listaProductos[columnas].url_imagen;
+                                string url_portada = "http://148.240.202.160:88/" + productos.listaProductos[columnas].url_imagen;
                                 Double precio = productos.listaProductos[columnas].precio;
                                 Debug.Write(url_portada);
                                 var imagen = new Image()

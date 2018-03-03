@@ -87,7 +87,7 @@ namespace TiendaUAQ.Views
             var authData1 = string.Format("{0}:{1}", "tiendaUAQ", "t13nd4U4q");
             var authHeaderValue1 = Convert.ToBase64String(Encoding.UTF8.GetBytes(authData1));
             myHttpClientValida.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", authHeaderValue1);
-            var responseValida = await myHttpClientValida.PostAsync("http://189.211.201.181:88/TiendaUAQWebservice/api/tblusuarios/valida/", formContent1);
+            var responseValida = await myHttpClientValida.PostAsync("http://148.240.202.160:88/TiendaUAQWebservice/api/tblusuarios/valida/", formContent1);
             var json1 = await responseValida.Content.ReadAsStringAsync();
             RestClient c1 = new RestClient();
             var usuarioV = await c1.convertirJson<Usuarios>(json1);
@@ -110,7 +110,7 @@ namespace TiendaUAQ.Views
                     var authData = string.Format("{0}:{1}", "tiendaUAQ", "t13nd4U4q");
                     var authHeaderValue = Convert.ToBase64String(Encoding.UTF8.GetBytes(authData));
                     myHttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", authHeaderValue);
-                    var response = await myHttpClient.PostAsync("http://189.211.201.181:88/TiendaUAQWebservice/api/tblusuarios/guardar/", formContent);
+                    var response = await myHttpClient.PostAsync("http://148.240.202.160:88/TiendaUAQWebservice/api/tblusuarios/guardar/", formContent);
                     var json = await response.Content.ReadAsStringAsync();
                     RestClient c = new RestClient();
                     var usuarioX = await c.convertirJson<Usuarios>(json);

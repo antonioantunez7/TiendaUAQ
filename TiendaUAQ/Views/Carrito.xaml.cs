@@ -34,7 +34,7 @@ namespace TiendaUAQ.Views
                 {
                     RestClient cliente = new RestClient();
 
-                    var pedidos = await cliente.GetPedidos<Pedidos>("http://189.211.201.181:88/TiendaUAQWebservice/api/tbldetallespedidos/pedido/usuario/"+Application.Current.Properties["idUsuarioTienda"].ToString());
+                    var pedidos = await cliente.GetPedidos<Pedidos>("http://148.240.202.160:88/TiendaUAQWebservice/api/tbldetallespedidos/pedido/usuario/"+Application.Current.Properties["idUsuarioTienda"].ToString());
                     if (pedidos != null)
                     {
                         if (pedidos.idPedido != 0)
@@ -48,7 +48,7 @@ namespace TiendaUAQ.Views
 
                             foreach (var producto in pedidos.detalle)
                             {
-                                string url_portada = "http://189.211.201.181:88/" + producto.url_imagen;
+                                string url_portada = "http://148.240.202.160:88/" + producto.url_imagen;
                                 cantidad = producto.cantidad;
                                 string estatusProducto = "# Existencias: " + producto.existencias;
                                 string descripcionPrecio = "" + producto.precio;
@@ -212,7 +212,7 @@ namespace TiendaUAQ.Views
                 var authData = string.Format("{0}:{1}", "tiendaUAQ", "t13nd4U4q");
                 var authHeaderValue = Convert.ToBase64String(Encoding.UTF8.GetBytes(authData));
                 myHttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", authHeaderValue);
-                var response = await myHttpClient.PostAsync("http://189.211.201.181:88/TiendaUAQWebservice/api/tbldetallespedidos/guardar/", formContent);
+                var response = await myHttpClient.PostAsync("http://148.240.202.160:88/TiendaUAQWebservice/api/tbldetallespedidos/guardar/", formContent);
                 var json = await response.Content.ReadAsStringAsync();
                 Debug.WriteLine(json);
                 if (response.IsSuccessStatusCode)

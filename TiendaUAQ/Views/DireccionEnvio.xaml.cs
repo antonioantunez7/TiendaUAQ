@@ -61,7 +61,7 @@ namespace TiendaUAQ.Views
                     waitActivityIndicador.IsRunning = true;//Pone el de cargando
                     btnContinuarPago.IsEnabled = false;//Deshabilita el boton
                     RestClient cliente = new RestClient();
-                    var pedidos = await cliente.GetPedidos<Pedidos>("http://189.211.201.181:88/TiendaUAQWebservice/api/tbldetallespedidos/pedido/usuario/" + Application.Current.Properties["idUsuarioTienda"].ToString());
+                    var pedidos = await cliente.GetPedidos<Pedidos>("http://148.240.202.160:88/TiendaUAQWebservice/api/tbldetallespedidos/pedido/usuario/" + Application.Current.Properties["idUsuarioTienda"].ToString());
                     if (pedidos != null)
                     {
                         if (pedidos.idPedido != 0)
@@ -139,7 +139,7 @@ namespace TiendaUAQ.Views
                                             var authData = string.Format("{0}:{1}", "tiendaUAQ", "t13nd4U4q");
                                             var authHeaderValue = Convert.ToBase64String(Encoding.UTF8.GetBytes(authData));
                                             myHttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", authHeaderValue);
-                                            var response = await myHttpClient.PostAsync("http://189.211.201.181:88/TiendaUAQWebService/api/tblpedidos/compra", formContent);
+                                            var response = await myHttpClient.PostAsync("http://148.240.202.160:88/TiendaUAQWebService/api/tblpedidos/compra", formContent);
                                             var json = await response.Content.ReadAsStringAsync();
                                             if (response.IsSuccessStatusCode)
                                             {

@@ -22,7 +22,7 @@ namespace TiendaUAQ.Views
             Device.BeginInvokeOnMainThread(async () =>
             {
                 RestClient cliente = new RestClient();
-                var productos = await cliente.GetProductos<ListaProductos>("http://189.211.201.181:88/TiendaUAQWebservice/api/tblproductos/subdepartamento/"+cveSubdepartamento);
+                var productos = await cliente.GetProductos<ListaProductos>("http://148.240.202.160:88/TiendaUAQWebservice/api/tblproductos/subdepartamento/"+cveSubdepartamento);
                 Debug.Write(productos);
                 if (productos != null)
                 {
@@ -63,7 +63,7 @@ namespace TiendaUAQ.Views
                                 int idProducto = productos.listaProductos[columnas].idProducto;
                                 string nombre = productos.listaProductos[columnas].nombre;
                                 //string descCategoria = categorias.listaCategorias[columnas].descCategoria;
-                                string url_portada = "http://189.211.201.181:88/" + productos.listaProductos[columnas].url_imagen;
+                                string url_portada = "http://148.240.202.160:88/" + productos.listaProductos[columnas].url_imagen;
                                 //string url_portada = "https://www.adidas.mx/dis/dw/image/v2/aaqx_prd/on/demandware.static/-/Sites-adidas-products/default/dw5ef5c4e2/zoom/S97604_01_standard.jpg?sh=840&strip=false&sw=840";
                                 //string url_portada = "https://pbs.twimg.com/profile_images/3673725732/da6f8684f131d039ee285cbf2bc52529.png";
                                 Debug.Write(url_portada);

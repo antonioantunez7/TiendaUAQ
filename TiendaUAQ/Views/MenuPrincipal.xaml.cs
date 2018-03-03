@@ -104,7 +104,7 @@ namespace TiendaUAQ.Views
                 Device.BeginInvokeOnMainThread(async () =>
                 {
                     RestClient cliente = new RestClient();
-                    var pedidos = await cliente.GetPedidos<Pedidos>("http://189.211.201.181:88/TiendaUAQWebservice/api/tbldetallespedidos/pedido/usuario/" + Application.Current.Properties["idUsuarioTienda"].ToString());
+                    var pedidos = await cliente.GetPedidos<Pedidos>("http://148.240.202.160:88/TiendaUAQWebservice/api/tbldetallespedidos/pedido/usuario/" + Application.Current.Properties["idUsuarioTienda"].ToString());
                     Debug.WriteLine(pedidos);
                     if (pedidos != null)
                     {

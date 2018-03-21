@@ -25,9 +25,9 @@ namespace TiendaUAQ.Droid
             global::Xamarin.Forms.Forms.Init(this, bundle);
             //Llamada a paypal
             CrossPayPalManager.Init(
-                new PayPalConfiguration(PayPalEnvironment.Sandbox, "ARIzxJa3tOHO9mLo7FB3YTp3n4Q28zh1kiMPDFie9lmMIvPWk5gN-ardzfJcpPzJ0NHpi2UWBZT6GbuV")
+                //new PayPalConfiguration(PayPalEnvironment.Sandbox, "ARIzxJa3tOHO9mLo7FB3YTp3n4Q28zh1kiMPDFie9lmMIvPWk5gN-ardzfJcpPzJ0NHpi2UWBZT6GbuV")
                 //new PayPalConfiguration(PayPalEnvironment.Production, "AZ4CjEeIYvI55U8oiRyPbfaCXXzijjtRskzgf5PGYxnTr62cbocIvncFUATGBXRhfkUXzaubXSEQ2nd5") antunez produccion
-                //new PayPalConfiguration(PayPalEnvironment.Production, "AaTHcSUCOzUWTn__0okD1xm3yuGUZyg6TeRY5FXPRVUwn8g14SL75xsEBgfaUYHbpD7OGy4GBteIvpxJ") //andrades produccion
+                new PayPalConfiguration(PayPalEnvironment.Production, "AaTHcSUCOzUWTn__0okD1xm3yuGUZyg6TeRY5FXPRVUwn8g14SL75xsEBgfaUYHbpD7OGy4GBteIvpxJ") //andrades produccion
                 {
                     StoreUserData = false,
                     AcceptCreditCards = true,
